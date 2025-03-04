@@ -1,0 +1,76 @@
+.allContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f5f5eb;
+  height: 100dvh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.titleContainer {
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 30%;
+}
+
+.title {
+  font-size: 30px;
+  color: #6a9132;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #8a8a8a;
+}
+
+.tabContainer {
+  display: flex;
+  width: 80%;
+  max-width: 400px;
+  background-color: #d9e2c7;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tab {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #6a9132;
+}
+
+.activeTab {
+  flex: 1;
+  padding: 10px;
+  background-color: #a8c686;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+}
+
+.contentBox {
+  margin-top: 20px;
+  background-color: white;
+  width: 80%;
+  max-width: 400px;
+  min-height: 300px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.matchingText {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #6a9132;
+  text-align: center;
+}
