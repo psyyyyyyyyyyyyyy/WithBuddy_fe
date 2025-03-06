@@ -5,8 +5,11 @@ import styles from "./loginMain.module.css";
 export default function LoginMain() {
   return (
     <div className={styles.allContainer}>
-      <h3 className={styles.mainText}>With Buddy</h3>
       <div className={styles.inputContainer}>
+        <div className={styles.titleContainer}>
+          <h2 className={styles.title}>With Buddy</h2>
+          <p className={styles.subtitle}>서경대학교 선후배 학번 매칭 사이트</p>
+        </div>
         <LoginInput />
         <LoginButton />
       </div>

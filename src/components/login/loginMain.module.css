@@ -8,6 +8,21 @@
   box-sizing: border-box;
 }
 
+.titleContainer {
+  text-align: center;
+  margin-bottom: 30%;
+}
+
+.title {
+  font-size: 30px;
+  color: #6a9132;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #8a8a8a;
+}
+
 .mainText {
   margin-top: 30%;
   font-size: 30px;
