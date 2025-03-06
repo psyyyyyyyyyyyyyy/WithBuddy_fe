@@ -2,16 +2,18 @@ import { useState } from "react";
 import GroupMatching from "./GroupMatching";
 import PersonalMatching from "./PersonalMatching";
 import styles from "./main.module.css";
+import Header from "../header/Header";
 
 export default function Main() {
   const [activeTab, setActiveTab] = useState("group");
 
   return (
     <div className={styles.allContainer}>
+      <Header />
       <div className={styles.titleContainer}>
         <h2 className={styles.title}>With Buddy</h2>
         <p className={styles.subtitle}>
-          소프트웨어학과 선후배 학번 매칭 사이트
+          서경대학교 선후배 학번 매칭 사이트
         </p>
       </div>
 
