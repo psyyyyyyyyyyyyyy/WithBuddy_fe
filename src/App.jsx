@@ -1,12 +1,11 @@
-import LoginPage from "./pages/LoginPage";
-import Main from "./pages/MainPage";
+// src/App.jsx
+import AppRoutes from "./router/Routes";
 import "./App.css";
 
-function App() {
+export default function App() {
   return (
     <div className="container">
-      <Main />
+      <AppRoutes />
     </div>
   );
 }
-export default App;
