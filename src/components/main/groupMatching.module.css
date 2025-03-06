@@ -1,9 +1,21 @@
 .container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 한 줄에 2개의 카드 */
   gap: 35px;
   padding: 20px 0;
+  height: 100%;
+  overflow-x: hidden;
+  grid-auto-rows: auto; /* 행의 높이를 자동으로 설정 */
+  grid-template-rows: auto; /* 행의 높이를 자동으로 설정 */
+}
+
+.container > :nth-child(odd) {
+  grid-column: span 1; /* 홀수 번째 아이템은 한 칸만 차지 */
+}
+
+.container::-webkit-scrollbar {
+  width: 0px; /* 수평/수직 스크롤바 숨기기 */
+  height: 0px;
 }
 
 .memberCard {
@@ -46,3 +58,4 @@
     width: 60px;
   }
 }
+
