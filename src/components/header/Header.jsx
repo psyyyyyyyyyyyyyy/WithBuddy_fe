@@ -20,7 +20,7 @@ export default function Header() {
             <nav className={`${styles.menu} ${menuOpen ? styles.menuOpen : ""}`}>
                 <ul>
                     <li onClick={() => navigate("/modify")}>정보수정</li>
-                    <li>게시판</li>
+                    <li onClick={() => navigate("/post")}>게시판</li>
                     <li onClick={() => navigate("/setting")}>설정</li>
                     <li>로그아웃</li>
                 </ul>

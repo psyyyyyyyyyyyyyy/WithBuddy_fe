@@ -1,0 +1,75 @@
+.allContainer {
+  background-color: #fff;
+  height: 100vh;
+}
+
+.postDetail {
+  padding: 20px;
+  background-color: #fff;
+}
+
+.detailHeader {
+  display: flex;
+  position: fixed;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+  height: 60px;
+  padding: 0 15px;
+  border-bottom: 1px solid #ddd;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  z-index: 90;
+}
+
+.icon {
+  font-size: 20px;
+  cursor: pointer;
+  color: #6a9132;
+}
+
+.postContentBox {
+  margin-top: 75px;
+}
+
+.postTitle {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.postHashtag {
+  font-size: 14px;
+  color: #6a9132;
+  margin-top: 5px;
+}
+
+.postBody {
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.reactionContainer {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.likeButton,
+.commentButton {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  gap: 5px;
+}
+
+.likedIcon {
+  color: red;
+}
