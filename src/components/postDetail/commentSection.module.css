@@ -1,0 +1,54 @@
+.commentSection {
+  margin-top: 30px;
+  padding: 15px 0;
+  border-top: 1px solid #6a9132;
+}
+
+.commentSection h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.commentForm {
+  display: flex;
+  gap: 10px;
+}
+
+.commentInput {
+  flex: 1;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #6a9132;
+  border-radius: 5px;
+}
+
+.commentButton {
+  background-color: #6a9132;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.commentList {
+  margin-top: 15px;
+}
+
+.noComments {
+  color: gray;
+  font-size: 14px;
+}
+
+.commentItem {
+  padding: 10px;
+  border-bottom: 1px solid #a8c686;
+  font-size: 14px;
+}
+
+.commentTime {
+  font-size: 12px;
+  color: gray;
+  display: block;
+  margin-top: 5px;
+}
