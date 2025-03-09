@@ -5,6 +5,9 @@ import LoginPage from "../pages/LoginPage";
 import MainPage from "../pages/MainPage";
 import ModificationPage from "../pages/Modification";
 import SettingPage from "../pages/SettingPage";
+import PostPage from "../pages/PostPage";
+import WritePostPage from "../pages/WritePostPage";
+import PostDetailPage from "../pages/PostDetailPage";
 
 export default function AppRoutes() {
   return (
@@ -16,6 +19,9 @@ export default function AppRoutes() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/modify" element={<ModificationPage />} />
         <Route path="/setting" element={<SettingPage />} />
+        <Route path="/post" element={<PostPage />} />
+        <Route path="/post/:id" element={<PostDetailPage />} />
+        <Route path="/write" element={<WritePostPage />} />
       </Routes>
     </Router>
   );
