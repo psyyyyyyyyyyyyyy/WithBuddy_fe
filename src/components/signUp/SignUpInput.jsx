@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { postEmailSend, postEmailVerify } from "../../api/emailAPI";
 import styles from "./signUpInput.module.css";
 
-export default function SignUpInput() {
-  const [email, setEmail] = useState("");
+export default function SignUpInput({
+  setFormData,
+  setEmail,
+  isVerified,
+  setIsVerified,
+}) {
+  const [localEmail, setLocalEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
-  const [isVerified, setIsVerified] = useState(false);
-  const [formData, setFormData] = useState({
+
+  const [localFormData, setLocalFormData] = useState({
     department: "",
     studentId: "",
     pin: "",
@@ -17,61 +23,105 @@ export default function SignUpInput() {
     bio: "",
   });
 
+  useEffect(() => {
+    setFormData(localFormData);
+    setEmail(localEmail);
+  }, [localFormData, localEmail, setFormData, setEmail]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // 특정 필드에 대한 입력값 검증
     let newValue = value;
 
     if (name === "pin" || name === "confirmPin") {
-      newValue = value.replace(/\D/g, "").slice(0, 4); // 숫자만 입력 + 4자리 제한
+      newValue = value.replace(/\D/g, "").slice(0, 4);
     } else if (name === "name") {
-      newValue = value.slice(0, 5); // 최대 5글자
+      newValue = value.slice(0, 5);
     } else if (name === "studentId") {
-      newValue = value.replace(/\D/g, "").slice(0, 10); // 숫자만 입력 + 10자리 제한
+      newValue = value.replace(/\D/g, "").slice(0, 10);
     } else if (name === "bio") {
-      newValue = value.slice(0, 50); // 최대 50글자
+      newValue = value.slice(0, 50);
     }
 
-    setFormData({ ...formData, [name]: newValue });
+    setLocalFormData((prev) => ({ ...prev, [name]: newValue }));
   };
 
   const handleEmailChange = (e) => {
     let value = e.target.value;
     if (!value.includes("@")) {
-      setEmail(value); // @skuniv.ac.kr 부분 제외하고 입력
+      setLocalEmail(value);
     }
   };
 
-  const handleVerificationCodeChange = (e) => {
-    setVerificationCode(e.target.value);
+  const sendVerificationCode = async () => {
+    if (!localEmail) {
+      alert("이메일을 입력해주세요.");
+      return;
+    }
+
+    try {
+      await postEmailSend({ email: `${localEmail}@skuniv.ac.kr` });
+      alert("인증번호가 발송되었습니다.");
+    } catch (error) {
+      alert("이메일 인증 요청에 실패했습니다. 다시 시도해주세요.");
+      console.error("인증 이메일 전송 오류:", error);
+    }
   };
 
-  const sendVerificationCode = () => {
-    // 이메일 인증 코드 전송 로직
-    alert("인증번호가 발송되었습니다.");
+  const verifyCode = async () => {
+    if (!verificationCode) {
+      alert("인증번호를 입력해주세요.");
+      return;
+    }
+
+    try {
+      await postEmailVerify({
+        email: `${localEmail}@skuniv.ac.kr`,
+        code: verificationCode,
+      });
+      setIsVerified(true);
+      alert("이메일 인증이 완료되었습니다.");
+    } catch (error) {
+      alert("인증번호가 올바르지 않습니다. 다시 확인해주세요.");
+      console.error("인증 코드 검증 오류:", error);
+    }
   };
 
-  const verifyCode = () => {
-    // 인증 코드 확인 로직
-    setIsVerified(true);
-    alert("이메일 인증이 완료되었습니다.");
+  // 필수 항목 체크 함수
+  const validateRequiredFields = () => {
+    const { department, studentId, pin, name } = localFormData;
+    if (!department) {
+      alert("학과를 입력해주세요.");
+      return false;
+    }
+    if (!studentId) {
+      alert("학번을 입력해주세요.");
+      return false;
+    }
+    if (!pin) {
+      alert("PIN 번호를 입력해주세요.");
+      return false;
+    }
+    if (!name) {
+      alert("이름을 입력해주세요.");
+      return false;
+    }
+    return true;
   };
 
   return (
     <div className={styles.inputContainer}>
-      <p className={styles.text}>이메일</p>
+      <p className={styles.text}>이메일*</p>
       <div className={styles.emailContainer}>
         <input
           type="email"
           className={`${styles.input} ${styles.emailInput}`}
-          value={email}
+          value={localEmail}
           onChange={handleEmailChange}
           placeholder="이메일 입력"
           disabled={isVerified}
         />
-        <span className={styles.email}>@skuniv.ac.kr</span>{" "}
-        {/* 고정된 이메일 도메인 */}
+        <span className={styles.email}>@skuniv.ac.kr</span>
       </div>
       <button
         className={styles.verifyButton}
@@ -88,7 +138,7 @@ export default function SignUpInput() {
             type="text"
             className={styles.input}
             value={verificationCode}
-            onChange={handleVerificationCodeChange}
+            onChange={(e) => setVerificationCode(e.target.value)}
             placeholder="인증번호 입력"
           />
           <button className={styles.verifyButton} onClick={verifyCode}>
@@ -97,52 +147,52 @@ export default function SignUpInput() {
         </>
       )}
 
-      <p className={styles.text}>학과</p>
+      <p className={styles.text}>학과*</p>
       <input
         type="text"
         className={styles.input}
         name="department"
-        value={formData.department}
+        value={localFormData.department}
         onChange={handleChange}
         placeholder="학과 입력"
       />
 
-      <p className={styles.text}>학번</p>
+      <p className={styles.text}>학번*</p>
       <input
         type="text"
         className={styles.input}
         name="studentId"
-        value={formData.studentId}
+        value={localFormData.studentId}
         onChange={handleChange}
         placeholder="학번 입력"
       />
 
-      <p className={styles.text}>PIN 번호</p>
+      <p className={styles.text}>PIN 번호*</p>
       <input
         type="password"
         className={styles.input}
         name="pin"
-        value={formData.pin}
+        value={localFormData.pin}
         onChange={handleChange}
         placeholder="PIN 번호 입력"
       />
 
-      <p className={styles.text}>PIN 번호 확인</p>
+      <p className={styles.text}>PIN 번호 확인*</p>
       <input
         type="password"
         className={styles.input}
         name="confirmPin"
-        value={formData.confirmPin}
+        value={localFormData.confirmPin}
         onChange={handleChange}
         placeholder="PIN 번호 확인"
       />
 
-      <p className={styles.text}>이름</p>
+      <p className={styles.text}>이름*</p>
       <input
         type="text"
         className={styles.input}
         name="name"
-        value={formData.name}
+        value={localFormData.name}
         onChange={handleChange}
         placeholder="이름 입력"
       />
@@ -152,7 +202,7 @@ export default function SignUpInput() {
         type="text"
         className={styles.input}
         name="instagram"
-        value={formData.instagram}
+        value={localFormData.instagram}
         onChange={handleChange}
         placeholder="인스타그램 아이디 입력"
       />
@@ -162,7 +212,7 @@ export default function SignUpInput() {
         type="text"
         className={styles.input}
         name="kakao"
-        value={formData.kakao}
+        value={localFormData.kakao}
         onChange={handleChange}
         placeholder="카카오톡 아이디 입력"
       />
@@ -172,7 +222,7 @@ export default function SignUpInput() {
         type="text"
         className={styles.input}
         name="mbti"
-        value={formData.mbti}
+        value={localFormData.mbti}
         onChange={handleChange}
         placeholder="MBTI 입력"
       />
@@ -182,7 +232,7 @@ export default function SignUpInput() {
         type="text"
         className={styles.input}
         name="bio"
-        value={formData.bio}
+        value={localFormData.bio}
         onChange={handleChange}
         placeholder="한줄 소개 입력"
       />
