@@ -27,6 +27,10 @@
   border: 1px solid #6a9132;
 }
 
+.input:first-child{
+  width: 40%;
+}
+
 .input:focus {
   border: 2px solid #4f7817;
   outline: none;
@@ -82,4 +86,11 @@
 
 .email{
     margin-left: 5px;
+    margin-bottom: 15px;
+}
+
+.emailContainer{
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
