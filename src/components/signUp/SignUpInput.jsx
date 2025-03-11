@@ -87,28 +87,6 @@ export default function SignUpInput({
     }
   };
 
-  // 필수 항목 체크 함수
-  const validateRequiredFields = () => {
-    const { department, studentId, pin, name } = localFormData;
-    if (!department) {
-      alert("학과를 입력해주세요.");
-      return false;
-    }
-    if (!studentId) {
-      alert("학번을 입력해주세요.");
-      return false;
-    }
-    if (!pin) {
-      alert("PIN 번호를 입력해주세요.");
-      return false;
-    }
-    if (!name) {
-      alert("이름을 입력해주세요.");
-      return false;
-    }
-    return true;
-  };
-
   return (
     <div className={styles.inputContainer}>
       <p className={styles.text}>이메일*</p>
