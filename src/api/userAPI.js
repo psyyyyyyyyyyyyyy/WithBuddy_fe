@@ -2,7 +2,7 @@ import { APIService } from "./axios";
 
 export async function postSignUp(userData) {
   try {
-    const baseUrl = import.meta.env.VITE_APP_POST_USER + "/signup";
+    const baseUrl = import.meta.env.VITE_APP_USER + "/signup";
     const response = await APIService.public.post(baseUrl, userData);
     return response;
   } catch (error) {
@@ -13,11 +13,22 @@ export async function postSignUp(userData) {
 
 export async function postLogin(userData) {
   try {
-    const baseUrl = import.meta.env.VITE_APP_POST_USER + "/login";
+    const baseUrl = import.meta.env.VITE_APP_USER + "/login";
     const response = await APIService.public.post(baseUrl, userData);
     return response;
   } catch (error) {
     console.error("로그인 API 오류:", error);
+    throw error;
+  }
+}
+
+export async function patchPIN(userData) {
+  try {
+    const baseUrl = import.meta.env.VITE_APP_USER + "/update/pin";
+    const response = await APIService.public.patch(baseUrl, userData);
+    return response;
+  } catch (error) {
+    console.error("핀번호 업데이트 오류:", error);
     throw error;
   }
 }
