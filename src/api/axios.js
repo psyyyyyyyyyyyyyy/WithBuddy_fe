@@ -88,17 +88,14 @@ const publicApi = axios.create({
 const privateApi = axios.create({
   baseURL: import.meta.env.VITE_APP_API_URL,
   timeout: 30000,
-});
+  withCredentials: true, //쿠키 자동 포함
+});;
 
 /**
  * 요청 인터셉터 - 쿠키에서 토큰을 가져와 요청 헤더에 추가
  */
 privateApi.interceptors.request.use(
   (config) => {
-    const token = getCookie("token"); // 쿠키에서 토큰 가져오기
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
     return config;
   },
   (error) => {
@@ -124,12 +121,12 @@ privateApi.interceptors.response.use(
         });
 
         const newToken = response.data.token;
-        setCookie("token", newToken, 7); // 새 토큰을 쿠키에 저장 (7일 유지)
+        setCookie("accessToken", newToken, 7); // 새 토큰을 쿠키에 저장 (7일 유지)
 
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return privateApi(originalRequest);
       } catch (refreshError) {
-        deleteCookie("token");
+        deleteCookie("accessToken");
         deleteCookie("refreshToken");
         window.location.href = "/login";
         return Promise.reject(refreshError);
@@ -151,6 +148,10 @@ export const APIService = {
     },
     post: async (url, data = {}, config = {}) => {
       const response = await publicApi.post(url, data, config);
+      return response.data;
+    },
+    patch: async (url, data = {}, config = {}) => {
+      const response = await publicApi.patch(url, data, config);
       return response.data;
     },
   },

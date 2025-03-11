@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // 뒤로가기 기능을 위한 useNavigate
+import { useNavigate } from "react-router-dom";
 import styles from "./findPINMain.module.css";
+import { postEmailSend, postEmailVerify } from "../../api/emailAPI";
+import { patchPIN } from "../../api/userAPI";
 
 export default function FindPINMain() {
   const [email, setEmail] = useState("");
@@ -9,15 +11,14 @@ export default function FindPINMain() {
   const [confirmNewPin, setConfirmNewPin] = useState("");
   const [isVerified, setIsVerified] = useState(false);
   const [isPinReset, setIsPinReset] = useState(false);
-  const navigate = useNavigate(); // useNavigate로 이동 기능 추가
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     const emailValue = e.target.value;
-    // @ 이전까지만 입력 받음
     if (emailValue.includes("@")) {
-      setEmail(emailValue.split("@")[0]); // @ 앞부분만 입력
+      setEmail(emailValue.split("@")[0]);
     } else {
-      setEmail(emailValue); // @가 없으면 그냥 입력
+      setEmail(emailValue);
     }
   };
 
@@ -28,35 +29,56 @@ export default function FindPINMain() {
   const handleNewPinChange = (e) => {
     const pin = e.target.value;
     if (/^\d{0,4}$/.test(pin)) {
-      setNewPin(pin); // 숫자만 4자리까지 입력 가능
+      setNewPin(pin);
     }
   };
 
   const handleConfirmNewPinChange = (e) => {
     const pin = e.target.value;
     if (/^\d{0,4}$/.test(pin)) {
-      setConfirmNewPin(pin); // 숫자만 4자리까지 입력 가능
+      setConfirmNewPin(pin);
     }
   };
 
-  const sendVerificationCode = () => {
-    // 이메일 인증 코드 전송 로직
-    alert("인증번호가 발송되었습니다.");
+  // 이메일 인증 코드 전송
+  const sendVerificationCode = async () => {
+    try {
+      await postEmailSend({ email: `${email}@skuniv.ac.kr` });
+      alert("인증번호가 발송되었습니다.");
+    } catch (error) {
+      alert("인증번호 전송에 실패했습니다.");
+    }
   };
 
-  const verifyCode = () => {
-    // 인증 코드 확인 로직
-    setIsVerified(true);
-    alert("이메일 인증이 완료되었습니다.");
+  // 인증 코드 확인
+  const verifyCode = async () => {
+    try {
+      await postEmailVerify({ email: `${email}@skuniv.ac.kr`, code: verificationCode });
+      setIsVerified(true);
+      alert("이메일 인증이 완료되었습니다.");
+    } catch (error) {
+      alert("인증번호가 올바르지 않습니다.");
+    }
   };
 
-  const handlePinReset = () => {
-    // PIN 번호 재설정 로직
-    if (newPin === confirmNewPin) {
+  // PIN 번호 재설정
+  const handlePinReset = async () => {
+    if (newPin !== confirmNewPin) {
+      alert("PIN 번호가 일치하지 않습니다.");
+      return;
+    }
+
+    try {
+      await patchPIN({
+        email: `${email}@skuniv.ac.kr`,
+        newPin,
+      });
+
       setIsPinReset(true);
       alert("PIN 번호가 재설정되었습니다.");
-    } else {
-      alert("PIN 번호가 일치하지 않습니다.");
+      navigate("/login"); // 로그인 페이지로 이동
+    } catch (error) {
+      alert("PIN 번호 변경에 실패했습니다.");
     }
   };
 
@@ -77,8 +99,7 @@ export default function FindPINMain() {
             onChange={handleEmailChange}
             placeholder="이메일 입력"
           />
-          <span className={styles.email}>@skuniv.ac.kr</span>{" "}
-          {/* 고정된 이메일 도메인 */}
+          <span className={styles.email}>@skuniv.ac.kr</span>
         </div>
         <button
           className={styles.verifyButton}

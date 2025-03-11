@@ -25,7 +25,7 @@ export async function getGroupMatching() {
 export async function getMatchingInfo(userId) {
     try {
       const baseUrl = `${import.meta.env.VITE_APP_GET_MATCHING}/user/${userId}`;
-      const response = await APIService.public.get(baseUrl);
+      const response = await APIService.private.get(baseUrl);
       return response;
     } catch (error) {
       console.error(`사용자 ${userId} 매칭 정보 오류:`, error);
