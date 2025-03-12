@@ -22,7 +22,8 @@ export default function Header() {
                     <li onClick={() => navigate("/modify")}>정보수정</li>
                     <li onClick={() => navigate("/post")}>게시판</li>
                     <li onClick={() => navigate("/setting")}>설정</li>
-                    <li>로그아웃</li>
+                    <li onClick={() => navigate("/chat")}>채팅</li>
+                    <li>로그아웃1</li>
                 </ul>
             </nav>
         </header>
