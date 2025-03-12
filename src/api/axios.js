@@ -77,9 +77,7 @@ const deleteCookie = (name) => {
 const publicApi = axios.create({
   baseURL: import.meta.env.VITE_APP_API_URL,
   timeout: 30000,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  withCredentials: true, //쿠키 자동 포함
 });
 
 /**

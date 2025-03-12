@@ -14,7 +14,7 @@ export async function postSignUp(userData) {
 export async function postLogin(userData) {
   try {
     const baseUrl = import.meta.env.VITE_APP_USER + "/login";
-    const response = await APIService.public.post(baseUrl, userData);
+    const response = await APIService.private.post(baseUrl, userData);
     return response;
   } catch (error) {
     console.error("로그인 API 오류:", error);
