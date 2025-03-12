@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "prebuild": "echo '/api/* ${API_URL}/:splat 200!' > public/_redirects",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
