@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./ChatList.module.css";
+import styles from "./chatList.module.css";
 import { CiUser } from "react-icons/ci";
 import Header from "../components/header/Header";
 import { io } from "socket.io-client";
