@@ -32,3 +32,25 @@ export async function patchPIN(userData) {
     throw error;
   }
 }
+
+export async function getMyInfo() {
+  try {
+    const baseUrl = import.meta.env.VITE_APP_USER + "/my";
+    const response = await APIService.private.get(baseUrl);
+    return response;
+  } catch (error) {
+    console.error("내 정보 오류:", error);
+    throw error;
+  }
+}
+
+export async function patchMyInfo(userData) {
+  try {
+    const baseUrl = import.meta.env.VITE_APP_USER + "/update";
+    const response = await APIService.private.patch(baseUrl, userData);
+    return response;
+  } catch (error) {
+    console.error("유저정보 업데이트 오류:", error);
+    throw error;
+  }
+}

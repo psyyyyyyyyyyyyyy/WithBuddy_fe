@@ -1,89 +1,87 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./groupMatching.module.css";
 import { FaUser } from "react-icons/fa";
+import { ClipLoader } from "react-spinners";
 import MemberModal from "./MemberModal";
-
-const members = [
-  {
-    id: 1,
-    year: "20학번",
-    name: "윤희준",
-    instagram: "@yoon_hj",
-    kakao: "yoon123",
-    mbti: "ENTP",
-    bio: "여행과 음악을 좋아해요!",
-  },
-  {
-    id: 2,
-    year: "20학번",
-    name: "변예섭",
-    instagram: "@byeon_ys",
-    kakao: "yeon98",
-    mbti: "INFJ",
-    bio: "책 읽는 걸 좋아하는 사람",
-  },
-  {
-    id: 3,
-    year: "22학번",
-    name: "이진동",
-    instagram: null,
-    kakao: "jindong22",
-    mbti: "ISTP",
-    bio: "코딩할 때 가장 행복해요!",
-  },
-  {
-    id: 4,
-    year: "22학번",
-    name: "박성연",
-    instagram: "@sy_ovo_oxo",
-    kakao: null,
-    mbti: "ENTP",
-    bio: "사람 만나는 걸 싫어해요 :)",
-  },
-  {
-    id: 5,
-    year: "23학번",
-    name: "김태현",
-    instagram: "@kimth23",
-    kakao: "thkim123",
-    mbti: "INTJ",
-    bio: "조용한 성격이지만 친해지면 말 많아요!",
-  },
-  {
-    id: 6,
-    year: "23학번",
-    name: "박태경",
-    instagram: null,
-    kakao: null,
-    mbti: "ENTP",
-    bio: "축구를 좋아하는 개발자!",
-  },
-];
-
+import { getPersonalMatching, getMatchingInfo } from "../../api/matchingAPI";
 
 export default function PersonalMatching() {
+  const [members, setMembers] = useState([]);
   const [selectedMember, setSelectedMember] = useState(null);
+  const [isLoding, setIsLoding] = useState(false);
+  const currentUserId = Number(localStorage.getItem("userId"));
+
+  useEffect(() => {
+    const fetchMembers = async () => {
+      setIsLoding(true); // 로딩 시작
+      try {
+        const response = await getPersonalMatching();
+        const matchParticipants = response.success.matchParticipants;
+
+        // 현재 로그인한 유저는 제외하고 데이터 요청
+        const filteredParticipants = matchParticipants.filter(
+          (participant) => participant.user.userId !== currentUserId
+        );
+
+        // 각 멤버의 추가 정보를 가져오기 위해 Promise.all 사용
+        const detailedMembers = await Promise.all(
+          filteredParticipants.map(async (participant) => {
+            const userInfo = await getMatchingInfo(participant.user.userId);
+            return {
+              id: userInfo.success.userId,
+              name: userInfo.success.name,
+              year:
+                userInfo.success.studentId?.slice(0, 2) + "학번" || "정보 없음",
+              instagram: userInfo.success.instaId || "정보 없음",
+              kakao: userInfo.success.kakaoId || "정보 없음",
+              mbti: userInfo.success.mbti || "정보 없음",
+              bio: userInfo.success.bio || "정보 없음",
+            };
+          })
+        );
+
+        setMembers(detailedMembers);
+      } catch (error) {
+        console.error("그룹 매칭 데이터 불러오기 실패:", error);
+      } finally {
+        setIsLoding(false); // 로딩 종료
+      }
+    };
+
+    fetchMembers();
+  }, [currentUserId]);
 
   return (
-    <div className={styles.container}>
-      {members.map((member) => (
-        <div 
-          key={member.id} 
-          className={styles.memberCard} 
-          onClick={() => setSelectedMember(member)}
-        >
-          <div className={styles.iconCircle}>
-            <FaUser className={styles.icon} />
-          </div>
-          <p className={styles.year}>{member.year}</p>
-          <p className={styles.name}>{member.name}</p>
+    <>
+      {isLoding ? (
+        <div className={styles.spinnerContainer}>
+          <ClipLoader color="#6a9132" size={40} />
         </div>
-      ))}
+      ) : (
+        <div className={styles.container}>
+          {members.map((member) => (
+          <div
+            key={member.id}
+            className={styles.memberCard}
+            onClick={() => setSelectedMember(member)}
+          >
+            <div className={styles.iconCircle}>
+              <FaUser className={styles.icon} />
+            </div>
+            <p className={styles.year}>{member.year}</p>
+            <p className={styles.name}>{member.name}</p>
+          </div>
+          ))}
+        </div>
+      )}
 
       {/* 모달 */}
       {selectedMember && (
-        <MemberModal member={selectedMember} onClose={() => setSelectedMember(null)} />
+        <MemberModal
+          member={selectedMember}
+          onClose={() => setSelectedMember(null)}
+        />
       )}
-    </div>
+    </>
   );
 }

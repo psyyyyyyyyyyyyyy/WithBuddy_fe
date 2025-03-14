@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { postEmailSend, postEmailVerify } from "../../api/emailAPI";
 import styles from "./signUpInput.module.css";
+import { ClipLoader } from "react-spinners";
 
 export default function SignUpInput({
   setFormData,
@@ -10,7 +11,7 @@ export default function SignUpInput({
 }) {
   const [localEmail, setLocalEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
-
+  const [isSendingCode, setIsSendingCode] = useState(false);
   const [localFormData, setLocalFormData] = useState({
     department: "",
     studentId: "",
@@ -39,8 +40,9 @@ export default function SignUpInput({
       newValue = value.slice(0, 5);
     } else if (name === "studentId") {
       newValue = value.replace(/\D/g, "").slice(0, 10);
-    } else if (name === "bio") {
-      newValue = value.slice(0, 50);
+    } else if (name === "bio" && value.length > 50) {
+      alert("한줄소개는 최대 50글자까지 입력 가능합니다.");
+      return;
     }
 
     setLocalFormData((prev) => ({ ...prev, [name]: newValue }));
@@ -58,13 +60,15 @@ export default function SignUpInput({
       alert("이메일을 입력해주세요.");
       return;
     }
-
+    setIsSendingCode(true); // 로딩 시작
     try {
       await postEmailSend({ email: `${localEmail}@skuniv.ac.kr` });
       alert("인증번호가 발송되었습니다.");
     } catch (error) {
       alert("이메일 인증 요청에 실패했습니다. 다시 시도해주세요.");
       console.error("인증 이메일 전송 오류:", error);
+    } finally {
+      setIsSendingCode(false); // 로딩 종료
     }
   };
 
@@ -89,6 +93,7 @@ export default function SignUpInput({
 
   return (
     <div className={styles.inputContainer}>
+      {/* 이메일 입력 */}
       <p className={styles.text}>이메일*</p>
       <div className={styles.emailContainer}>
         <input
@@ -101,14 +106,21 @@ export default function SignUpInput({
         />
         <span className={styles.email}>@skuniv.ac.kr</span>
       </div>
-      <button
-        className={styles.verifyButton}
-        onClick={sendVerificationCode}
-        disabled={isVerified}
-      >
-        {isVerified ? "인증 완료" : "인증 요청"}
-      </button>
+      {isSendingCode ? (
+        <div className={styles.spinnerContainer}>
+          <ClipLoader color="#6a9132" size={40} />
+        </div>
+      ) : (
+        <button
+          className={styles.verifyButton}
+          onClick={sendVerificationCode}
+          disabled={isVerified || isSendingCode}
+        >
+          {isVerified ? "인증 완료" : "인증 요청"}
+        </button>
+      )}
 
+      {/* 인증번호 입력 */}
       {!isVerified && (
         <>
           <p className={styles.text}>인증번호 입력</p>
@@ -119,6 +131,7 @@ export default function SignUpInput({
             onChange={(e) => setVerificationCode(e.target.value)}
             placeholder="인증번호 입력"
           />
+
           <button className={styles.verifyButton} onClick={verifyCode}>
             확인
           </button>

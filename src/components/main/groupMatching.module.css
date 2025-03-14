@@ -53,9 +53,14 @@
   color: #555;
 }
 
+.spinnerContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 @media (max-width: 380px) {
   .memberCard {
     width: 60px;
   }
 }
-
