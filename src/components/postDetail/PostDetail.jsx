@@ -55,10 +55,10 @@ export default function PostDetail() {
     setMenuOpen((prev) => !prev);
   };
 
-  const handleEditPost = () => {
-    console.log("글 수정하기 클릭");
-    // TODO: 글 수정 페이지로 이동 (예: navigate(`/edit/${postId}`))
-  };
+  // const handleEditPost = () => {
+  //   console.log("글 수정하기 클릭");
+  //   // TODO: 글 수정 페이지로 이동 (예: navigate(`/edit/${postId}`))
+  // };
 
   const handleDeletePost = async () => {
     try {
