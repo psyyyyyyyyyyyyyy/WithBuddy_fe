@@ -24,7 +24,7 @@ export async function getPostDetail(postId) {
   }
 }
 
-export async function postPost({title, content}) {
+export async function postPost({ title, content }) {
   try {
     const baseUrl = import.meta.env.VITE_APP_POST;
     const response = await APIService.private.post(baseUrl, {
@@ -45,6 +45,17 @@ export async function deletePost(postId) {
     return response;
   } catch (error) {
     console.error("글삭제 오류:", error);
+    throw error;
+  }
+}
+
+export async function updatePost(postId, data) {
+  try {
+    const baseUrl = `${import.meta.env.VITE_APP_POST}/update/${postId}`;
+    const response = await APIService.private.put(baseUrl, data);
+    return response;
+  } catch (error) {
+    console.error("글 수정 오류:", error);
     throw error;
   }
 }

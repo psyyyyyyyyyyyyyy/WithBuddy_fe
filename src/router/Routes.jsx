@@ -10,6 +10,7 @@ import WritePostPage from "../pages/WritePostPage";
 import PostDetailPage from "../pages/PostDetailPage";
 import ChatList from "../pages/ChatListPage";
 import ChatPage from "../pages/ChatPage";
+import EditPostPage from "../pages/EditPostPage";
 
 export default function AppRoutes() {
   return (
@@ -26,6 +27,7 @@ export default function AppRoutes() {
         <Route path="/write" element={<WritePostPage />} />
         <Route path="/chat" element={<ChatList />} />
         <Route path="/chat/:id" element={<ChatPage />} />
+        <Route path="/edit/:postId" element={<EditPostPage />} />
       </Routes>
     </Router>
   );

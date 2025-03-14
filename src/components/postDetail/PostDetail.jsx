@@ -55,10 +55,9 @@ export default function PostDetail() {
     setMenuOpen((prev) => !prev);
   };
 
-  // const handleEditPost = () => {
-  //   console.log("글 수정하기 클릭");
-  //   // TODO: 글 수정 페이지로 이동 (예: navigate(`/edit/${postId}`))
-  // };
+  const handleEditPost = () => {
+    navigate(`/edit/${postId}`, { state: post });
+  };
 
   const handleDeletePost = async () => {
     try {
@@ -99,7 +98,7 @@ export default function PostDetail() {
               }`}
             >
               <ul>
-                <li onClick={() => console.log("글 수정")}>글 수정하기</li>
+                <li onClick={() => handleEditPost()}>글 수정하기</li>
                 <li onClick={() => setShowDeleteModal(true)}>글 삭제하기</li>
               </ul>
             </nav>

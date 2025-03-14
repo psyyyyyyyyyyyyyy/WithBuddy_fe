@@ -50,6 +50,7 @@ export default function WritePost() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           className={styles.titleInput}
+          maxLength={30}
         />
         <input
           type="text"
