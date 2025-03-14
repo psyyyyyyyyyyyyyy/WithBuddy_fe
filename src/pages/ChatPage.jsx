@@ -4,6 +4,7 @@ import styles from "./chat.module.css";
 import { io } from "socket.io-client";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header/Header";
+import { FaPaperPlane } from "react-icons/fa";
 
 const ChatPage = () => {
   const { id } = useParams();
@@ -98,7 +99,7 @@ const ChatPage = () => {
             onChange={(e) => setMessage(e.target.value)}
           />
           <button className={styles.send_button} type="submit">
-            전송
+            <FaPaperPlane />
           </button>
         </form>
       </div>{" "}

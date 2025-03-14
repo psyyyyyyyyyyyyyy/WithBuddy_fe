@@ -59,3 +59,25 @@ export async function updatePost(postId, data) {
     throw error;
   }
 }
+
+export async function postLike(postId) {
+  try {
+    const baseUrl = `${import.meta.env.VITE_APP_POST}/${postId}/like`;
+    const response = await APIService.private.post(baseUrl);
+    return response;
+  } catch (error) {
+    console.error("좋아요 추가:", error);
+    throw error;
+  }
+}
+
+export async function deleteLike(postId) {
+  try {
+    const baseUrl = `${import.meta.env.VITE_APP_POST}/${postId}/unlike`;
+    const response = await APIService.private.delete(baseUrl);
+    return response;
+  } catch (error) {
+    console.error("좋아요 삭제:", error);
+    throw error;
+  }
+}

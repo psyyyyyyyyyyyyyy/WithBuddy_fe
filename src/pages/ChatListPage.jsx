@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./chatList.module.css";
-import { CiUser } from "react-icons/ci";
 import Header from "../components/header/Header";
 import { io } from "socket.io-client";
+import { FaUser } from "react-icons/fa";
 
 const ChatListPage = () => {
   const navigate = useNavigate();
@@ -59,7 +59,9 @@ const ChatListPage = () => {
                 onClick={() => navigate(`/chat/${room.room.roomId}`)}
               >
                 <div className={styles.room_item_avatar}>
-                  <CiUser size={24} />
+                  <div className={styles.iconCircle}>
+                    <FaUser className={styles.icon} />
+                  </div>
                 </div>
                 <div className={styles.room_item_info}>
                   <h2 className={styles.room_item_name}>
