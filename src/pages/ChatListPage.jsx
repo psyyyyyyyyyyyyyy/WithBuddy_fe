@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./chatList.module.css";
 import { CiUser } from "react-icons/ci";
 import Header from "../components/header/Header";
 import { io } from "socket.io-client";
 
-const ChatList = () => {
-  const userId = 1;
+const ChatListPage = () => {
+  const navigate = useNavigate();
+  const userId = Number(localStorage.getItem("userId"));
   const [rooms, setRooms] = useState([]);
   const [socket, setSocket] = useState(null);
 
@@ -51,7 +53,11 @@ const ChatList = () => {
         <div className={styles.room_list}>
           {rooms.length > 0 ? (
             rooms.map((room, index) => (
-              <div key={index} className={styles.room_item} onClick={() => {}}>
+              <div
+                key={index}
+                className={styles.room_item}
+                onClick={() => navigate(`/chat/${room.room.roomId}`)}
+              >
                 <div className={styles.room_item_avatar}>
                   <CiUser size={24} />
                 </div>
@@ -74,4 +80,4 @@ const ChatList = () => {
   );
 };
 
-export default ChatList;
+export default ChatListPage;

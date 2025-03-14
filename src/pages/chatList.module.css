@@ -1,130 +1,121 @@
-.messages_section::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .message {
-    padding: 10px 15px;
-    margin-bottom: 30px;
-    border-radius: 18px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 60%;
-    word-break: break-word;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .message.right {
-    background-color: #c6d1ae;
-    align-self: flex-end;
-    text-align: left;
-    border-bottom-right-radius: 0;
-    margin-left: auto;
-  }
-  
-  .message.left {
-    background-color: #eaf2d8;
-    align-self: flex-start;
-    text-align: left;
-    border-bottom-left-radius: 0;
-    margin-right: auto;
-  }
-  
-  .timestamp {
-    font-size: 0.75rem;
-    color: #888;
-    position: absolute;
-    bottom: -20px;
-    right: 10px;
-  }
-  
-  .input_section {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-  }
-  
-  .input {
-    flex: 1;
-    padding: 0.5rem 1rem;
-    border: 1px solid #e0e0e0;
-    background-color: #ffffff;
-    border-radius: 1rem;
-    margin: 0.75rem;
-  }
-  
-  .send_button {
-    border: none;
-    background-color: #c6d1ae;
-    cursor: pointer;
-    width: 5rem;
-    height: 45px;
-    white-space: nowrap;
-  
-    padding: 0.5rem 0;
-    color: white;
-    border-radius: 1rem;
-  }
-  
-  .send_button:hover {
-    background-color: #aab689;
-  }
-  .back_button {
-    position: absolute;
-    left: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    padding: 8px;
-  }
-  .back_button:hover {
-    opacity: 0.8;
-  }
-  .allContainer {
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .cardContainer {
-    background-color: #f2f1e9;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    max-width: 400px;
-    width: 70%;
-    max-height: 400px;
-    min-height: 500px;
-    margin-top: 60px;
-    overflow-y: auto;
-    position: relative;
-  }
-  
-  .cardContainer::before {
-    content: "채팅";
-    color: #ffffff;
-    font-size: 18px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 50px;
-    background-color: #c6d1ae;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-  }
-  
-  .cardContainer::-webkit-scrollbar {
-    width: 0px; /* 수평/수직 스크롤바 숨기기 */
-    height: 0px;
-  }
-  
+.cardContainer {
+  background-color: #f2f1e9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 300px;
+  width: 70%;
+  max-height: 400px;
+  min-height: 300px;
+  overflow-y: auto;
+  margin-top: 60px;
+  position: relative;
+}
+
+.cardContainer::before {
+  content: "채팅 방";
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #a8c686;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.cardContainer::-webkit-scrollbar {
+  width: 0px; /* 수평/수직 스크롤바 숨기기 */
+  height: 0px;
+}
+
+.sectionHeader {
+  font-weight: bold;
+  color: #c6d1ae;
+  margin-top: 20px;
+}
+
+.sectionHeader:first-child {
+  margin-top: 50px;
+}
+
+.cardContainer hr {
+  width: 30%;
+  border: 1px solid #c6d1ae;
+  margin-bottom: 20px;
+}
+
+.title {
+  color: white;
+  font-weight: bold;
+}
+
+.room_list {
+  padding: 16px;
+  overflow-y: auto;
+  overflow: auto;
+}
+
+.room_item {
+  background-color: white;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.room_item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.room_item_avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #efeeee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+}
+
+.room_item_name {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0 0 4px 0;
+}
+
+.room_item_details {
+  font-size: 0.9rem;
+  color: #757575;
+  margin: 0;
+}
+
+.loading {
+  text-align: center;
+  color: #757575;
+  padding: 20px;
+}
+.allContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100dvh;
+  padding: 20px;
+  box-sizing: border-box;
+}
