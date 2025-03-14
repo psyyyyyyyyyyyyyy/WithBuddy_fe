@@ -23,7 +23,7 @@ export default function PostFilter({ onSearch, onSortChange }) {
       <div className={styles.searchBox}>
         <input
           type="text"
-          placeholder="검색어 입력..."
+          placeholder="검색어, 해시태그 입력"
           value={searchText}
           onChange={handleSearch}
           className={styles.searchInput}
