@@ -56,3 +56,8 @@
 .verifyButton:hover {
   background-color: #5a7e2e;
 }
+
+.spinnerContainer{
+  display: flex;
+  justify-content: center;
+}

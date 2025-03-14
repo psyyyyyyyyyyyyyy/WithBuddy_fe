@@ -4,11 +4,13 @@ import LoginInput from "./LoginInput";
 import LoginButton from "./LoginButton";
 import styles from "./loginMain.module.css";
 import { postLogin } from "../../api/userAPI";
+import useUserStore from "../../store/userStore";
 
 export default function LoginMain() {
   const navigate = useNavigate();
   const [studentId, setStudentId] = useState("");
   const [pin, setPin] = useState("");
+  const setUser = useUserStore((state) => state.setUser); // Zustand에서 setUser 가져오기
 
   const handleLogin = async () => {
     if (!studentId || !pin) {
@@ -21,7 +23,15 @@ export default function LoginMain() {
     try {
       const response = await postLogin(requestBody);
       console.log("로그인 성공:", response);
-      alert("로그인에 성공했습니다.");
+
+      // Zustand에 로그인 정보 저장
+      const userData = {
+        userId: response.success.userId,
+        studentId: response.success.studentId,
+        name: response.success.name,
+      };
+  
+      setUser(userData);
       navigate("/"); // 로그인 후 홈 화면으로 이동
     } catch (error) {
       console.error("로그인 실패:", error);
