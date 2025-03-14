@@ -3,7 +3,6 @@ import styles from "./groupMatching.module.css";
 import { FaUser } from "react-icons/fa";
 import MemberModal from "./MemberModal";
 import { getGroupMatching, getMatchingInfo } from "../../api/matchingAPI";
-
 import { ClipLoader } from "react-spinners";
 
 export default function GroupMatching() {
@@ -31,7 +30,7 @@ export default function GroupMatching() {
             return {
               id: userInfo.success.userId,
               name: userInfo.success.name,
-              year: userInfo.success.studentId?.slice(0, 2) + "학번" || "정보 없음",
+              year: userInfo.success.studentId?.slice(2, 4) + "학번" || "정보 없음",
               instagram: userInfo.success.instaId || "정보 없음",
               kakao: userInfo.success.kakaoId || "정보 없음",
               mbti: userInfo.success.mbti || "정보 없음",
