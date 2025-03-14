@@ -68,6 +68,7 @@
   background: none;
   border: none;
   gap: 5px;
+  color: #6a9132;
 }
 
 .likedIcon {
@@ -89,7 +90,7 @@
   cursor: pointer;
   width: 24px;
   height: 24px;
-  color: #4f7817;
+  color: #6a9132;
 }
 
 /* 수정/삭제 메뉴 스타일 */

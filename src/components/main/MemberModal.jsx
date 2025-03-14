@@ -9,7 +9,7 @@ export default function GroupModal({ member, onClose }) {
     <div className={styles.modalOverlay} onClick={onClose}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <button className={styles.closeButton} onClick={onClose}>
-          <FaTimes />
+          <FaTimes className={styles.icon} />
         </button>
 
         <h2 className={styles.name}>{member.name}</h2>

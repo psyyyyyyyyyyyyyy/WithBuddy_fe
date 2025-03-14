@@ -62,6 +62,11 @@
   margin-top: 30px;
 }
 
+.room_list::-webkit-scrollbar {
+  width: 0px; /* 수평/수직 스크롤바 숨기기 */
+  height: 0px;
+}
+
 .room_item {
   background-color: white;
   padding: 12px;
