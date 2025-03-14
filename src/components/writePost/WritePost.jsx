@@ -1,27 +1,36 @@
 import { useState } from "react";
-import styles from "./writePost.module.css";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { postPost } from "../../api/postAPI"; // postPost 가져오기
 import { FaTimes, FaCheck, FaImage } from "react-icons/fa";
+import styles from "./writePost.module.css";
 
 export default function WritePost() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [hashtags, setHashtags] = useState("");
   const [content, setContent] = useState("");
-  const [images, setImages] = useState([]);
+  //const [images, setImages] = useState([]);
 
-  const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files); // 여러 파일을 배열로 변환
-    const newImages = files.map((file) => URL.createObjectURL(file)); // 미리보기 URL 생성
-    setImages((prev) => [...prev, ...newImages]); // 기존 이미지와 합쳐서 업데이트
-  };
+  // 글 작성 요청
+  const mutation = useMutation({
+    mutationFn: postPost,
+    onSuccess: () => {
+      navigate(-1); // 이전 페이지로 이동
+    },
+    onError: (error) => {
+      alert("게시글 등록에 실패했습니다.");
+      console.error(error);
+    },
+  });
 
   const handlePostSubmit = () => {
-    console.log("제목:", title);
-    console.log("해시태그:", hashtags);
-    console.log("내용:", content);
-    console.log("이미지:", images);
-    navigate(-1); // 이전 페이지로 이동
+    if (!title.trim() || !content.trim()) {
+      alert("제목과 내용을 입력해주세요.");
+      return;
+    }
+
+    mutation.mutate({ title, content });
   };
 
   return (
@@ -58,6 +67,7 @@ export default function WritePost() {
       </div>
 
       {/* 이미지 업로드 */}
+      {/* 
       <div className={styles.imageUpload}>
         <label htmlFor="imageUpload" className={styles.imageButton}>
           <FaImage className={styles.imageIcon} />
@@ -67,13 +77,15 @@ export default function WritePost() {
           id="imageUpload"
           type="file"
           accept="image/*"
-          multiple // 여러 개 선택 가능
+          multiple
           onChange={handleImageUpload}
           hidden
         />
       </div>
+      */}
 
       {/* 이미지 미리보기 */}
+      {/* 
       <div className={styles.previewContainer}>
         {images.map((img, index) => (
           <img
@@ -84,6 +96,7 @@ export default function WritePost() {
           />
         ))}
       </div>
+      */}
     </div>
   );
 }
