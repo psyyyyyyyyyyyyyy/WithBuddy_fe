@@ -18,13 +18,13 @@ export async function getGroupMatching() {
     return response;
   } catch (error) {
     console.error("그룹 매칭 오류:", error);
-    throw error; // 에러를 부모 컴포넌트로 던짐
+    throw error; 
   }
 }
 
 export async function getMatchingInfo(userId) {
     try {
-      const baseUrl = `${import.meta.env.VITE_APP_GET_MATCHING}/user/${userId}`;
+      const baseUrl = `${import.meta.env.VITE_APP_GET_MATCHING}/${userId}`;
       const response = await APIService.private.get(baseUrl);
       return response;
     } catch (error) {
