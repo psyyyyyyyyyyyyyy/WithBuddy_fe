@@ -102,7 +102,7 @@ privateApi.interceptors.request.use(
 );
 
 /**
- * 응답 인터셉터 - 400, 401 발생 시 자동으로 토큰 갱신
+ * 응답 인터셉터 - 401 발생 시 자동으로 토큰 갱신
  */
 privateApi.interceptors.response.use(
   (response) => response,

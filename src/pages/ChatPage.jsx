@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import styles from "./chat.module.css";
 import { io } from "socket.io-client";
-import { CiCircleChevLeft } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header/Header";
 
 const ChatPage = () => {
-  const roomId = 1;
-  const userId = 1;
+  const { id } = useParams();
+  const roomId = Number(id);
+  const userId = Number(localStorage.getItem("userId"));
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
@@ -20,9 +21,8 @@ const ChatPage = () => {
 
     newSocket.on("connect", () => {
       newSocket.emit("joinRoom", { userId, roomId });
+      newSocket.emit("getMessages", roomId);
     });
-
-    newSocket.emit("getMessages", roomId);
 
     newSocket.on("loadMessages", (msg) => {
       setMessages(msg);
@@ -54,10 +54,6 @@ const ChatPage = () => {
       socket.emit("sendMessage", newMsg);
       setMessage("");
     }
-  };
-
-  const handleBack = () => {
-    navigate(-1);
   };
 
   const handleSubmit = (e) => {

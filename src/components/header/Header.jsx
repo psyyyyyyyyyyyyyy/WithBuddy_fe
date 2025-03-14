@@ -12,6 +12,9 @@ export default function Header() {
   const handleLogout = () => {
     logout(); // Zustand & 로컬 스토리지 초기화
     navigate("/login");
+    setTimeout(() => {
+    window.location.reload();
+  }, 100)
   };
 
   return (
