@@ -39,7 +39,8 @@ export default function CommentSection({ postId, initialComments }) {
 
     try {
       const response = await postComments(postId, newComment);
-      const savedComment = response?.data;
+
+      const savedComment = response?.success;
 
       setComments((prev) => [savedComment, ...prev]);
 
