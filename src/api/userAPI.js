@@ -54,3 +54,14 @@ export async function patchMyInfo(userData) {
     throw error;
   }
 }
+
+export async function deleteUser() {
+  try {
+    const baseUrl = import.meta.env.VITE_APP_USER + "/delete";
+    const response = await APIService.private.delete(baseUrl);
+    return response;
+  } catch (error) {
+    console.error("유저 탈퇴 오류:", error);
+    throw error;
+  }
+}
