@@ -12,6 +12,12 @@ export default function WritePost() {
   const [content, setContent] = useState("");
   //const [images, setImages] = useState([]);
 
+  const parseHashtags = (input) => {
+    return input
+      .split(/\s+/) // 공백 기준으로 분리
+      .filter((tag) => tag.startsWith("#") && tag.length > 1); // #으로 시작하고 글자 포함
+  };
+
   // 글 작성 요청
   const mutation = useMutation({
     mutationFn: postPost,
@@ -29,8 +35,8 @@ export default function WritePost() {
       alert("제목과 내용을 입력해주세요.");
       return;
     }
-
-    mutation.mutate({ title, content });
+    const hashtagArray = parseHashtags(hashtags);
+    mutation.mutate({ title, content, postTags: hashtagArray });
   };
 
   return (

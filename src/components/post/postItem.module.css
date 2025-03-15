@@ -30,6 +30,7 @@
   color: gray;
   display: flex;
   text-align: center;
+  gap: 5px;
 }
 
 .postLikes {
@@ -41,6 +42,5 @@
 }
 
 .heartIcon {
-  margin-right: 5px;
-  color: #6a9132;
+  color: #a8c686;
 }

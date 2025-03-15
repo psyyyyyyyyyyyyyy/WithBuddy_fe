@@ -13,9 +13,9 @@ export default function CommentSection({ postId, initialComments }) {
   const loggedInUserId = Number(localStorage.getItem("userId")); // 로컬스토리지에서 userId 가져오기
 
   useEffect(() => {
-    // 댓글을 commentId 기준으로 내림차순 정렬
+    // 댓글을 commentId 기준으로 오름차순 정렬
     const sortedComments = [...initialComments].sort(
-      (a, b) => b.commentId - a.commentId
+      (a, b) => a.commentId - b.commentId
     );
 
     // 익명 번호 부여 로직
@@ -24,7 +24,8 @@ export default function CommentSection({ postId, initialComments }) {
 
     sortedComments.forEach((comment) => {
       if (!newUserMap.has(comment.userId)) {
-        newUserMap.set(comment.userId, `익명${anonymousCounter++}`);
+        newUserMap.set(comment.userId, `익명${anonymousCounter}`);
+        anonymousCounter++;
       }
     });
 
@@ -42,7 +43,7 @@ export default function CommentSection({ postId, initialComments }) {
 
       const savedComment = response?.success;
 
-      setComments((prev) => [savedComment, ...prev]);
+      setComments((prev) => [...prev, savedComment]);
 
       setNewComment("");
 

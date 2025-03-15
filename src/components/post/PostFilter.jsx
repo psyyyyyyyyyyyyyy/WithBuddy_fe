@@ -2,15 +2,16 @@ import { useState } from "react";
 import styles from "./postFilter.module.css";
 import { FaSearch } from "react-icons/fa";
 
-export default function PostFilter({ onSearch, onSortChange }) {
+export default function PostFilter({ onSearch, onSearchClick, onSortChange }) {
   const [searchText, setSearchText] = useState("");
-  const [sortType, setSortType] = useState("latest"); // 기본값: 최신순
+  const [sortType, setSortType] = useState("최신순");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const handleSearch = (e) => {
-    setSearchText(e.target.value);
-    onSearch(e.target.value);
+  const handleSearchClick = () => {
+    if (searchText.trim() === "") return; // 빈 검색어 방지
+    onSearch(searchText);
   };
+
 
   const handleSortChange = (type) => {
     setSortType(type);
@@ -25,10 +26,10 @@ export default function PostFilter({ onSearch, onSortChange }) {
           type="text"
           placeholder="검색어, 해시태그 입력"
           value={searchText}
-          onChange={handleSearch}
+          onChange={(e) => setSearchText(e.target.value)}
           className={styles.searchInput}
         />
-        <FaSearch className={styles.searchIcon} />
+        <FaSearch className={styles.searchIcon} onClick={() => onSearchClick(searchText)}/>
       </div>
 
       <div className={styles.sortDropdown}>
@@ -36,13 +37,13 @@ export default function PostFilter({ onSearch, onSortChange }) {
           className={styles.sortButton}
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         >
-          {sortType === "latest" ? "최신순" : sortType === "comments" ? "댓글순" : "공감순"} ▼
+          {sortType} ▼
         </button>
         {isDropdownOpen && (
           <ul className={styles.sortList}>
-            <li onClick={() => handleSortChange("latest")}>최신순</li>
-            <li onClick={() => handleSortChange("comments")}>댓글순</li>
-            <li onClick={() => handleSortChange("likes")}>공감순</li>
+            <li onClick={() => handleSortChange("최신순")}>최신순</li>
+            <li onClick={() => handleSortChange("댓글순")}>댓글순</li>
+            <li onClick={() => handleSortChange("공감순")}>공감순</li>
           </ul>
         )}
       </div>

@@ -10,6 +10,9 @@ const ChatPage = () => {
   const { id } = useParams();
   const roomId = Number(id);
   const userId = Number(localStorage.getItem("userId"));
+  const studentId = localStorage.getItem("studentId") || "";
+  console.log(studentId);
+  const studentYear = studentId.slice(3, 5); // ""까지 포함되어 저장되기 때문에 3,5로 설정
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
@@ -77,7 +80,7 @@ const ChatPage = () => {
               <div>
                 <span>
                   {msg.sender.name}
-                  <span>{msg.senderId}학번</span>
+                  <span>{studentYear}학번</span>
                 </span>
               </div>
               <div>{msg.content}</div>

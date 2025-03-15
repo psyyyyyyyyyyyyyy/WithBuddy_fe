@@ -1,10 +1,10 @@
 import { APIService } from "./axios";
 
-export async function getPosts(lastPostId) {
+export async function getPosts(lastPostId, sortBy) {
   try {
     const baseUrl = import.meta.env.VITE_APP_POST + "/list";
     const response = await APIService.private.get(baseUrl, {
-      params: { lastPostId },
+      params: { lastPostId, sortBy },
     });
     return response;
   } catch (error) {
@@ -24,12 +24,13 @@ export async function getPostDetail(postId) {
   }
 }
 
-export async function postPost({ title, content }) {
+export async function postPost({ title, content, postTags }) {
   try {
     const baseUrl = import.meta.env.VITE_APP_POST;
     const response = await APIService.private.post(baseUrl, {
       title,
       content,
+      postTags,
     });
     return response;
   } catch (error) {
@@ -78,6 +79,19 @@ export async function deleteLike(postId) {
     return response;
   } catch (error) {
     console.error("좋아요 삭제:", error);
+    throw error;
+  }
+}
+
+export async function getSearchPost(query) {
+  try {
+    const baseUrl = `${import.meta.env.VITE_APP_POST}/search`;
+    const response = await APIService.private.get(baseUrl,{
+      params: { query, },
+    });
+    return response;
+  } catch (error) {
+    console.error("게시물 검색 오류:", error);
     throw error;
   }
 }
