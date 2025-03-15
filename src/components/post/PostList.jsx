@@ -5,11 +5,11 @@ import PostItem from "./PostItem";
 import styles from "./postList.module.css";
 import { ClipLoader } from "react-spinners";
 
-export default function PostList() {
+export default function PostList({ sortType }) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: ["posts"],
-      queryFn: ({ pageParam = null }) => getPosts(pageParam),
+      queryKey: ["posts", sortType],
+      queryFn: ({ pageParam = null }) => getPosts(pageParam, sortType),
       getNextPageParam: (lastPage) =>
         lastPage.success.length
           ? lastPage.success[lastPage.success.length - 1].postId

@@ -9,7 +9,12 @@ import {
 } from "react-icons/fa";
 import styles from "./postDetail.module.css";
 import CommentSection from "./CommentSection";
-import { getPostDetail, deletePost } from "../../api/postAPI";
+import {
+  getPostDetail,
+  deletePost,
+  postLike,
+  deleteLike,
+} from "../../api/postAPI";
 import { ClipLoader } from "react-spinners";
 
 export default function PostDetail() {
@@ -37,6 +42,7 @@ export default function PostDetail() {
         const postData = response?.success || {};
         setPost(postData);
         setLikeCount(postData.likeCount || 0);
+        setLiked(postData.likedByUser || false);
       } catch (error) {
         console.error("게시물 상세 조회 오류:", error);
         navigate(-1);
@@ -46,9 +52,19 @@ export default function PostDetail() {
     fetchPostDetail();
   }, [postId, navigate]);
 
-  const toggleLike = () => {
-    setLiked(!liked);
-    setLikeCount(liked ? likeCount - 1 : likeCount + 1);
+  const toggleLike = async () => {
+    try {
+      if (liked) {
+        await deleteLike(postId); // 좋아요 취소 API 호출
+        setLikeCount((prev) => prev - 1);
+      } else {
+        await postLike(postId); // 좋아요 추가 API 호출
+        setLikeCount((prev) => prev + 1);
+      }
+      setLiked((prev) => !prev); // liked 상태 토글
+    } catch (error) {
+      console.error("좋아요 처리 실패:", error);
+    }
   };
 
   const toggleMenu = () => {
@@ -111,7 +127,8 @@ export default function PostDetail() {
         <div className={styles.postContentBox}>
           <h2 className={styles.postTitle}>{post.title}</h2>
           <p className={styles.postHashtag}>
-            {post.postTags?.join(" ") || "#태그없음"}
+            {post.postTags?.map((tagObj) => tagObj.tag.name).join(" ") ||
+              "#태그없음"}
           </p>
         </div>
 
@@ -122,7 +139,7 @@ export default function PostDetail() {
         <div className={styles.reactionContainer}>
           <button className={styles.likeButton} onClick={toggleLike}>
             {liked ? <FaHeart className={styles.likedIcon} /> : <FaRegHeart />}
-            {likeCount}
+            {post._count.likedBy}
           </button>
           <button className={styles.commentButton}>
             <FaComment /> {post.comment || 0}

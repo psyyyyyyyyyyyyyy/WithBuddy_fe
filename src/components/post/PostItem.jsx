@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaComment } from "react-icons/fa";
 import styles from "./postItem.module.css";
 import { forwardRef } from "react"; // ref를 받기 위해 forwardRef 사용
 
@@ -27,7 +27,8 @@ const PostItem = forwardRef(({ post }, ref) => {
       <h3 className={styles.postTitle}>{post.title}</h3>
       <p className={styles.postContent}>{post.content}</p>
       <span className={styles.postTime}>
-        <FaHeart className={styles.heartIcon} /> {post.likeCount || 0} |{" "}
+        <FaHeart className={styles.heartIcon} /> {post._count.likedBy || 0} {" "}
+        <FaComment className={styles.heartIcon} /> {post._count.comments || 0} |{" "}
         {formatDate(post.createdAt)}
       </span>
     </div>
