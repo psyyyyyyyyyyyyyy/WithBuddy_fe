@@ -18,29 +18,33 @@ export default function PersonalMatching() {
         const response = await getPersonalMatching();
         const matchParticipants = response.success.matchParticipants;
 
-        // 현재 로그인한 유저는 제외하고 데이터 요청
-        const filteredParticipants = matchParticipants.filter(
-          (participant) => participant.user.userId !== currentUserId
-        );
-
         // 각 멤버의 추가 정보를 가져오기 위해 Promise.all 사용
         const detailedMembers = await Promise.all(
-          filteredParticipants.map(async (participant) => {
+          matchParticipants.map(async (participant) => {
             const userInfo = await getMatchingInfo(participant.user.userId);
             return {
               id: userInfo.success.userId,
-              name: userInfo.success.name,
+              name:
+                userInfo.success.userId === currentUserId
+                  ? "내 프로필"
+                  : userInfo.success.name, // 현재 유저 이름 '나'로 변경
               year:
                 userInfo.success.studentId?.slice(0, 2) + "학번" || "정보 없음",
               instagram: userInfo.success.instaId || "정보 없음",
               kakao: userInfo.success.kakaoId || "정보 없음",
               mbti: userInfo.success.mbti || "정보 없음",
               bio: userInfo.success.bio || "정보 없음",
+              isCurrentUser: userInfo.success.userId === currentUserId,
             };
           })
         );
 
-        setMembers(detailedMembers);
+        // 현재 유저를 가장 위로 정렬
+        const sortedMembers = detailedMembers.sort((a, b) =>
+          a.id === currentUserId ? -1 : 1
+        );
+
+        setMembers(sortedMembers);
       } catch (error) {
         console.error("그룹 매칭 데이터 불러오기 실패:", error);
       } finally {
@@ -60,17 +64,22 @@ export default function PersonalMatching() {
       ) : (
         <div className={styles.container}>
           {members.map((member) => (
-          <div
-            key={member.id}
-            className={styles.memberCard}
-            onClick={() => setSelectedMember(member)}
-          >
-            <div className={styles.iconCircle}>
-              <FaUser className={styles.icon} />
+            <div
+              key={member.id}
+              className={styles.memberCard}
+              onClick={() => setSelectedMember(member)}
+            >
+              <div className={styles.iconCircle}>
+                <FaUser
+                  className={styles.icon}
+                  style={{
+                    color: member.isCurrentUser ? "#6a9132" : "#ffffff",
+                  }} // 본인은 초록색
+                />
+              </div>
+              <p className={styles.year}>{member.year}</p>
+              <p className={styles.name}>{member.name}</p>
             </div>
-            <p className={styles.year}>{member.year}</p>
-            <p className={styles.name}>{member.name}</p>
-          </div>
           ))}
         </div>
       )}
