@@ -1,20 +1,9 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {
-  FaHeart,
-  FaRegHeart,
-  FaComment,
-  FaTimes,
-  FaEllipsisV,
-} from "react-icons/fa";
+import {FaHeart,FaRegHeart,FaComment,FaTimes,FaEllipsisV,} from "react-icons/fa";
 import styles from "./postDetail.module.css";
 import CommentSection from "./CommentSection";
-import {
-  getPostDetail,
-  deletePost,
-  postLike,
-  deleteLike,
-} from "../../api/postAPI";
+import {getPostDetail,deletePost,postLike,deleteLike,} from "../../api/postAPI";
 import { ClipLoader } from "react-spinners";
 
 export default function PostDetail() {
@@ -72,7 +61,6 @@ export default function PostDetail() {
       console.error("좋아요 처리 실패:", error);
     }
   };
-  
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
@@ -100,6 +88,18 @@ export default function PostDetail() {
       </div>
     );
   }
+
+  const formatDate = (isoString) => {
+    const date = new Date(isoString);
+    return date.toLocaleString("ko-KR", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+  };
 
   return (
     <div className={styles.allContainer}>
@@ -137,6 +137,10 @@ export default function PostDetail() {
             {post.postTags?.map((tagObj) => tagObj.tag.name).join(" ") ||
               "#태그없음"}
           </p>
+        </div>
+        {/* 날짜 */}
+        <div className={styles.dateContainer}>
+          <p className={styles.date}>{formatDate(post.createdAt)}</p>
         </div>
 
         {/* 게시글 내용 */}
