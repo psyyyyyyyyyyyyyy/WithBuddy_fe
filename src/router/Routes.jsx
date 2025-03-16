@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import RootLayout from "../components/layout/RootLayout";
+
 import SignUp from "../pages/SignUp";
 import FindPINPage from "../pages/FindPINPage";
 import LoginPage from "../pages/LoginPage";
@@ -15,20 +17,22 @@ import EditPostPage from "../pages/EditPostPage";
 export default function AppRoutes() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/findPIN" element={<FindPINPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/modify" element={<ModificationPage />} />
-        <Route path="/setting" element={<SettingPage />} />
-        <Route path="/post" element={<PostPage />} />
-        <Route path="/post/:id" element={<PostDetailPage />} />
-        <Route path="/write" element={<WritePostPage />} />
-        <Route path="/chat" element={<ChatList />} />
-        <Route path="/chat/:id" element={<ChatPage />} />
-        <Route path="/edit/:postId" element={<EditPostPage />} />
-      </Routes>
+      <RootLayout>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/findPIN" element={<FindPINPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/modify" element={<ModificationPage />} />
+          <Route path="/setting" element={<SettingPage />} />
+          <Route path="/post" element={<PostPage />} />
+          <Route path="/post/:id" element={<PostDetailPage />} />
+          <Route path="/write" element={<WritePostPage />} />
+          <Route path="/chat" element={<ChatList />} />
+          <Route path="/chat/:id" element={<ChatPage />} />
+          <Route path="/edit/:postId" element={<EditPostPage />} />
+        </Routes>
+      </RootLayout>
     </Router>
   );
 }
