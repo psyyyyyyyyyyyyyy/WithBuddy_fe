@@ -6,18 +6,18 @@ import WriteButton from "./WriteButton";
 import useSearchStore from "../../store/searchStore";
 
 export default function PostMain() {
-  const { searchQuery, isSearching, setSearchQuery, resetSearch, sortType, setSortType } = useSearchStore();
+  const { searchQuery, isSearching, sortType, setSearchQuery, setSortType, resetSearch } = useSearchStore();
 
   const handleSearch = (query) => {
-    setSearchQuery(query); // Zustand로 검색어어 상태 업데이트
+    setSearchQuery(query);
   };
 
   const handleSortChange = (sort) => {
-    setSortType(sort); // Zustand로 정렬 상태 업데이트
+    setSortType(sort);
   };
 
   const handleBack = () => {
-    resetSearch();
+    resetSearch(); // Zustand 상태 초기화
   };
 
   return (
