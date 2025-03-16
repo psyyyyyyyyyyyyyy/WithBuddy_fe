@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import SignUpInput from "./SignUpInput";
 import styles from "./signUpMain.module.css";
 import { postSignUp } from "../../api/userAPI";
+import { FaArrowLeft } from "react-icons/fa";
 
 export default function SignUpMain() {
   const navigate = useNavigate();
@@ -26,19 +27,19 @@ export default function SignUpMain() {
       alert("이메일 인증을 완료해주세요.");
       return;
     }
-  
+
     if (formData.pin !== formData.confirmPin) {
       alert("PIN 번호가 일치하지 않습니다.");
       return;
     }
-  
+
     // 필수 입력 항목 체크
     const { department, studentId, pin, name } = formData;
     if (!department || !studentId || !pin || !name) {
       alert("필수 입력 항목이 비어있습니다.");
       return;
     }
-  
+
     const userData = {
       name: formData.name,
       studentId: formData.studentId,
@@ -69,12 +70,17 @@ export default function SignUpMain() {
   return (
     <div className={styles.allContainer}>
       <button className={styles.backButton} onClick={() => navigate("/login")}>
-        ←
+        <FaArrowLeft />
       </button>
 
       <h2 className={styles.mainText}>회원가입</h2>
 
-      <SignUpInput setFormData={setFormData} setEmail={setEmail} isVerified={isVerified} setIsVerified={setIsVerified} />
+      <SignUpInput
+        setFormData={setFormData}
+        setEmail={setEmail}
+        isVerified={isVerified}
+        setIsVerified={setIsVerified}
+      />
 
       <button className={styles.signUpButton} onClick={handleSignUp}>
         회원가입

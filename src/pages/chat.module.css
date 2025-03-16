@@ -133,3 +133,20 @@
   width: 0px; /* 수평/수직 스크롤바 숨기기 */
   height: 0px;
 }
+
+.back_button {
+  position: absolute;
+  left: 10px;
+  top: 25px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 8px;
+  font-size: 18px;
+}
+
+.back_button:hover {
+  opacity: 0.8;
+}
+

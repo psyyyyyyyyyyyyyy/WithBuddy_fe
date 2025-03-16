@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./findPINMain.module.css";
 import { postEmailSend, postEmailVerify } from "../../api/emailAPI";
 import { patchPIN } from "../../api/userAPI";
+import { FaArrowLeft } from "react-icons/fa";
 
 export default function FindPINMain() {
   const [email, setEmail] = useState("");
@@ -53,7 +54,10 @@ export default function FindPINMain() {
   // 인증 코드 확인
   const verifyCode = async () => {
     try {
-      await postEmailVerify({ email: `${email}@skuniv.ac.kr`, code: verificationCode });
+      await postEmailVerify({
+        email: `${email}@skuniv.ac.kr`,
+        code: verificationCode,
+      });
       setIsVerified(true);
       alert("이메일 인증이 완료되었습니다.");
     } catch (error) {
@@ -84,8 +88,8 @@ export default function FindPINMain() {
 
   return (
     <div className={styles.allContainer}>
-      <button className={styles.backButton} onClick={() => navigate('/login')}>
-        ←
+      <button className={styles.backButton} onClick={() => navigate("/login")}>
+        <FaArrowLeft />
       </button>
 
       <h2 className={styles.title}>PIN 번호 변경</h2>
