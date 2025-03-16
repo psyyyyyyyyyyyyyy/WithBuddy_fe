@@ -42,7 +42,7 @@ export default function PostDetail() {
         const postData = response?.success || {};
         setPost(postData);
         setLikeCount(postData.likeCount || 0);
-        setLiked(postData.likedByUser || false);
+        setLiked(postData.likedBy?.length > 0); // likedBy 배열이 비어있지 않다면 true
       } catch (error) {
         console.error("게시물 상세 조회 오류:", error);
         navigate(-1);
@@ -56,16 +56,23 @@ export default function PostDetail() {
     try {
       if (liked) {
         await deleteLike(postId); // 좋아요 취소 API 호출
-        setLikeCount((prev) => prev - 1);
+        setPost((prev) => ({
+          ...prev,
+          _count: { ...prev._count, likedBy: prev._count.likedBy - 1 },
+        }));
       } else {
         await postLike(postId); // 좋아요 추가 API 호출
-        setLikeCount((prev) => prev + 1);
+        setPost((prev) => ({
+          ...prev,
+          _count: { ...prev._count, likedBy: prev._count.likedBy + 1 },
+        }));
       }
       setLiked((prev) => !prev); // liked 상태 토글
     } catch (error) {
       console.error("좋아요 처리 실패:", error);
     }
   };
+  
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
@@ -142,7 +149,7 @@ export default function PostDetail() {
             {post._count.likedBy}
           </button>
           <button className={styles.commentButton}>
-            <FaComment /> {post.comment || 0}
+            <FaComment /> {post._count.comments || 0}
           </button>
         </div>
 

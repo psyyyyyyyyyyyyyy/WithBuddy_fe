@@ -17,12 +17,11 @@
 .postContent {
   font-size: 14px;
   margin: 5px 0;
-  display: -webkit-box;
   -webkit-line-clamp: 2; /* 최대 2줄 */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: normal;
+  white-space: nowrap;
 }
 
 .postTime {
