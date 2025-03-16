@@ -4,7 +4,7 @@ import styles from "./chat.module.css";
 import { io } from "socket.io-client";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header/Header";
-import { FaPaperPlane } from "react-icons/fa";
+import { FaPaperPlane, FaArrowLeft } from "react-icons/fa";
 
 const ChatPage = () => {
   const { id } = useParams();
@@ -69,6 +69,10 @@ const ChatPage = () => {
     <div className={styles.allContainer}>
       <Header />
       <div className={styles.cardContainer}>
+      <button className={styles.back_button} onClick={() => navigate(-1)}>
+        <FaArrowLeft />
+      </button>
+
         <div className={styles.messages_section}>
           {messages.map((msg, index) => (
             <div
