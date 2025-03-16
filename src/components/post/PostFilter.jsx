@@ -1,10 +1,11 @@
 import { useState } from "react";
 import styles from "./postFilter.module.css";
 import { FaSearch, FaArrowLeft } from "react-icons/fa";
+import useSearchStore from "../../store/searchStore";
 
 export default function PostFilter({ onSearch, onSortChange, isSearching, onBack }) {
   const [searchText, setSearchText] = useState("");
-  const [sortType, setSortType] = useState("최신순");
+  const { sortType, setSortType } = useSearchStore(); // Zustand에서 정렬 상태 관리
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleSearchClick = () => {
@@ -13,8 +14,8 @@ export default function PostFilter({ onSearch, onSortChange, isSearching, onBack
   };
 
   const handleSortChange = (type) => {
-    setSortType(type);
-    onSortChange(type);
+    setSortType(type); // Zustand에서 정렬 상태 변경
+    onSortChange(type); // 부모 컴포넌트에 변경 알림
     setIsDropdownOpen(false);
   };
 

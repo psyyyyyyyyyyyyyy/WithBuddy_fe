@@ -5,11 +5,13 @@ import styles from "./postDetail.module.css";
 import CommentSection from "./CommentSection";
 import {getPostDetail,deletePost,postLike,deleteLike,} from "../../api/postAPI";
 import { ClipLoader } from "react-spinners";
+import useSearchStore from "../../store/searchStore";
 
 export default function PostDetail() {
   const location = useLocation();
   const navigate = useNavigate();
   const postId = location.state;
+  const { isSearching } = useSearchStore();
 
   const [post, setPost] = useState(null);
   const [liked, setLiked] = useState(false);
@@ -79,6 +81,14 @@ export default function PostDetail() {
     }
   };
 
+  const handleClose = () => {
+    if (isSearching) {
+      navigate("/post", { replace: true }); // 검색 결과 유지
+    } else {
+      navigate(-1); // 일반 뒤로 가기
+    }
+  };
+
   if (!post) {
     return (
       <div className={styles.loading}>
@@ -105,7 +115,7 @@ export default function PostDetail() {
     <div className={styles.allContainer}>
       {/* 헤더 */}
       <div className={styles.detailHeader}>
-        <FaTimes className={styles.icon} onClick={() => navigate(-1)} />
+        <FaTimes className={styles.icon} onClick={handleClose} />
 
         {/* 현재 로그인한 userId와 post.userId가 같을 때만 옵션 버튼 표시 */}
         {loggedInUserId === post.userId && (

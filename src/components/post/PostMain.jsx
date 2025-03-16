@@ -1,26 +1,23 @@
-import { useState } from "react";
 import styles from "./postMain.module.css";
 import Header from "../header/Header";
 import PostFilter from "./PostFilter";
 import PostList from "./PostList";
 import WriteButton from "./WriteButton";
+import useSearchStore from "../../store/searchStore";
 
 export default function PostMain() {
-  const [sortType, setSortType] = useState("최신순");
-  const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태
-  const [isSearching, setIsSearching] = useState(false); // 검색 여부 상태
+  const { searchQuery, isSearching, setSearchQuery, resetSearch, sortType, setSortType } = useSearchStore();
 
   const handleSearch = (query) => {
-    setSearchQuery(query);
-    setIsSearching(true);
+    setSearchQuery(query); // Zustand로 검색어어 상태 업데이트
   };
 
   const handleSortChange = (sort) => {
-    setSortType(sort);
+    setSortType(sort); // Zustand로 정렬 상태 업데이트
   };
 
   const handleBack = () => {
-    window.location.href = "/post";
+    resetSearch();
   };
 
   return (
@@ -29,8 +26,8 @@ export default function PostMain() {
       <PostFilter
         onSearch={handleSearch}
         onSortChange={handleSortChange}
-        isSearching={isSearching} // 검색 여부 전달
-        onBack={handleBack} // 뒤로 가기 버튼 클릭 시 실행
+        isSearching={isSearching}
+        onBack={handleBack}
       />
       <PostList sortType={sortType} searchQuery={searchQuery} isSearching={isSearching} />
       <WriteButton />
