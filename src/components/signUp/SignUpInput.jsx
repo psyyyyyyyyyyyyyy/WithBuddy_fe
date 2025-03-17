@@ -13,7 +13,7 @@ export default function SignUpInput({
   const [verificationCode, setVerificationCode] = useState("");
   const [isSendingCode, setIsSendingCode] = useState(false);
   const [localFormData, setLocalFormData] = useState({
-    department: "",
+    department: "소프트웨어학과",
     studentId: "",
     pin: "",
     confirmPin: "",
@@ -144,8 +144,8 @@ export default function SignUpInput({
         className={styles.input}
         name="department"
         value={localFormData.department}
-        onChange={handleChange}
-        placeholder="학과 입력"
+        placeholder="소프트웨어학과"
+        disabled
       />
 
       <p className={styles.text}>학번*</p>

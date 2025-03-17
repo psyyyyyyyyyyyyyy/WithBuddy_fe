@@ -13,7 +13,7 @@ export default function Main() {
       <div className={styles.titleContainer}>
         <h2 className={styles.title}>With Buddy</h2>
         <p className={styles.subtitle}>
-          서경대학교 선후배 학번 매칭 사이트
+          소프트웨어학과 선후배 학번 매칭 사이트
         </p>
       </div>
 
