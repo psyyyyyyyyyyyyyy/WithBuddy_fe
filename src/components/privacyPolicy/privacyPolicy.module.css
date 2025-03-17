@@ -1,0 +1,40 @@
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .container h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .container  h2 {
+    font-size: 20px;
+    margin-top: 20px;
+  }
+  
+  .container  h3 {
+    font-size: 18px;
+    margin-top: 15px;
+  }
+  
+  .container p {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  .container ul {
+    list-style-type: disc;
+    padding-left: 20px;
+  }
+  
+  .container li {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
