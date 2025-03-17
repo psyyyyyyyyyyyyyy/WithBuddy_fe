@@ -150,3 +150,17 @@
   opacity: 0.8;
 }
 
+.studentId{
+  margin-left: 5px;
+  color: gray;
+  font-size: 12px;
+}
+
+.nameText{
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.userInfoContainer{
+  margin-bottom: 5px;
+}

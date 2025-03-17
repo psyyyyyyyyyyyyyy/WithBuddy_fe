@@ -65,3 +65,14 @@ export async function deleteUser() {
     throw error;
   }
 }
+
+export async function postLogout() {
+  try {
+    const baseUrl = import.meta.env.VITE_APP_USER + "/logout";
+    const response = await APIService.private.post(baseUrl);
+    return response;
+  } catch (error) {
+    console.error("로그아웃 API 오류:", error);
+    throw error;
+  }
+}

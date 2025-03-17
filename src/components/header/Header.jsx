@@ -3,18 +3,24 @@ import { useNavigate } from "react-router-dom";
 import styles from "./header.module.css";
 import { FiMenu, FiX } from "react-icons/fi";
 import useUserStore from "../../store/userStore";
+import { postLogout } from "../../api/userAPI";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { logout } = useUserStore(); // Zustand에서 로그아웃 함수 가져오기
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await postLogout(); // 서버에 로그아웃 요청
+    } catch (error) {
+      console.error("로그아웃 실패:", error);
+    }
+
     logout(); // Zustand & 로컬 스토리지 초기화
     navigate("/login");
-    setTimeout(() => {
-    window.location.reload();
-  }, 100)
+    
+    
   };
 
   return (
