@@ -13,10 +13,13 @@ export default function WritePost() {
   //const [images, setImages] = useState([]);
 
   const parseHashtags = (input) => {
-    return input
-      .split(/\s+/) // 공백 기준으로 분리
-      .filter((tag) => tag.startsWith("#") && tag.length > 1); // #으로 시작하고 글자 포함
+    return [...new Set(
+      input
+        .split(/\s+/) // 공백 기준으로 분리
+        .filter((tag) => tag.startsWith("#") && tag.length > 1) // #으로 시작하고 글자 포함
+    )];
   };
+  
 
   // 글 작성 요청
   const mutation = useMutation({
