@@ -81,10 +81,10 @@ const ChatPage = () => {
                 msg.senderId === userId ? styles.right : styles.left
               }`}
             >
-              <div>
-                <span>
+              <div className={styles.userInfoContainer}>
+                <span className={styles.nameText}>
                   {msg.sender.name}
-                  <span>{studentYear}학번</span>
+                  <span className={styles.studentId}>{studentYear}학번</span>
                 </span>
               </div>
               <div>{msg.content}</div>
