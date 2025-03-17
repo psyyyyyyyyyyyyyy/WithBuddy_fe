@@ -11,7 +11,7 @@ const ChatPage = () => {
   const roomId = Number(id);
   const userId = Number(localStorage.getItem("userId"));
   const studentId = localStorage.getItem("studentId") || "";
-  console.log(studentId);
+
   const studentYear = studentId.slice(3, 5); // ""까지 포함되어 저장되기 때문에 3,5로 설정
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -54,7 +54,7 @@ const ChatPage = () => {
         roomId,
         content: message,
       };
-
+      
       socket.emit("sendMessage", newMsg);
       setMessage("");
     }

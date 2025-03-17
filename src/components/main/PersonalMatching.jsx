@@ -29,7 +29,7 @@ export default function PersonalMatching() {
                   ? "내 프로필"
                   : userInfo.success.name, // 현재 유저 이름 '나'로 변경
               year:
-                userInfo.success.studentId?.slice(0, 2) + "학번" || "정보 없음",
+                userInfo.success.studentId?.slice(2, 4) + "학번" || "정보 없음",
               instagram: userInfo.success.instaId || "정보 없음",
               kakao: userInfo.success.kakaoId || "정보 없음",
               mbti: userInfo.success.mbti || "정보 없음",
