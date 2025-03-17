@@ -5,6 +5,7 @@ import LoginButton from "./LoginButton";
 import styles from "./loginMain.module.css";
 import { postLogin } from "../../api/userAPI";
 import useUserStore from "../../store/userStore";
+import { handleAllowNotification } from "../../util/notificationFunc";
 
 export default function LoginMain() {
   const navigate = useNavigate();
@@ -30,9 +31,10 @@ export default function LoginMain() {
         studentId: response.success.studentId,
         name: response.success.name,
       };
-  
+
       setUser(userData);
       navigate("/"); // 로그인 후 홈 화면으로 이동
+      handleAllowNotification();
     } catch (error) {
       console.error("로그인 실패:", error);
       alert("로그인에 실패했습니다. 학번 또는 PIN을 확인해주세요.");
