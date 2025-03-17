@@ -4,6 +4,7 @@ import styles from "./chatList.module.css";
 import Header from "../components/header/Header";
 import { io } from "socket.io-client";
 import { FaUser } from "react-icons/fa";
+import { ClipLoader } from "react-spinners";
 
 const ChatListPage = () => {
   const navigate = useNavigate();
@@ -74,7 +75,9 @@ const ChatListPage = () => {
               </div>
             ))
           ) : (
-            <div className={styles.loading}>Loading...</div>
+            <div className={styles.spinnerContainer}>
+              <ClipLoader color="#6a9132" size={40} />
+            </div>
           )}
         </div>
       </div>
