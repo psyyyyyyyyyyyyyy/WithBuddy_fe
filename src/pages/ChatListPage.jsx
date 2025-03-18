@@ -23,14 +23,12 @@ const ChatListPage = () => {
     setSocket(newSocket);
 
     newSocket.on("connect", () => {
-      console.log("Connected to server");
       // 소켓 연결이 되면 getUserRooms 호출
       getUserRooms();
     });
 
     // 서버로부터 채팅방 목록을 받을 때
     newSocket.on("userRooms", (rooms) => {
-      console.log(rooms);
       setRooms(rooms);
     });
 

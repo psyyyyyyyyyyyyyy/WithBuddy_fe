@@ -19,11 +19,17 @@ export default function LoginMain() {
       return;
     }
 
+    if (Notification.permission === "default") {
+      const status = await handleAllowNotification();
+      if (status === "denied") {
+        alert("알림이 차단되었습니다.\n브라우저 설정에서 직접 허용해주세요.");
+      }
+    }
+
     const requestBody = { studentId, pin };
 
     try {
       const response = await postLogin(requestBody);
-      console.log("로그인 성공:", response);
 
       // Zustand에 로그인 정보 저장
       const userData = {
@@ -34,9 +40,7 @@ export default function LoginMain() {
 
       setUser(userData);
       navigate("/"); // 로그인 후 홈 화면으로 이동
-      handleAllowNotification();
-    } catch (error) {
-      console.error("로그인 실패:", error);
+    } catch {
       alert("로그인에 실패했습니다. 학번 또는 PIN을 확인해주세요.");
     }
   };

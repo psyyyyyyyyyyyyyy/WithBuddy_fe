@@ -8,7 +8,7 @@ export async function getPosts(lastPostId, sortBy) {
     });
     return response;
   } catch (error) {
-    console.error("게시물 불러오기 오류:", error);
+    ("게시물 불러오기 오류:", error);
     throw error;
   }
 }
@@ -19,7 +19,7 @@ export async function getPostDetail(postId) {
     const response = await APIService.private.get(baseUrl);
     return response;
   } catch (error) {
-    console.error("게시물 상세보기 오류:", error);
+    ("게시물 상세보기 오류:", error);
     throw error;
   }
 }
@@ -34,7 +34,7 @@ export async function postPost({ title, content, postTags }) {
     });
     return response;
   } catch (error) {
-    console.error("글쓰기 오류:", error);
+    ("글쓰기 오류:", error);
     throw error;
   }
 }
@@ -45,7 +45,7 @@ export async function deletePost(postId) {
     const response = await APIService.private.delete(baseUrl);
     return response;
   } catch (error) {
-    console.error("글삭제 오류:", error);
+    ("글삭제 오류:", error);
     throw error;
   }
 }
@@ -56,7 +56,7 @@ export async function updatePost(postId, data) {
     const response = await APIService.private.put(baseUrl, data);
     return response;
   } catch (error) {
-    console.error("글 수정 오류:", error);
+    ("글 수정 오류:", error);
     throw error;
   }
 }
@@ -67,7 +67,7 @@ export async function postLike(postId) {
     const response = await APIService.private.post(baseUrl);
     return response;
   } catch (error) {
-    console.error("좋아요 추가:", error);
+    ("좋아요 추가:", error);
     throw error;
   }
 }
@@ -78,7 +78,7 @@ export async function deleteLike(postId) {
     const response = await APIService.private.delete(baseUrl);
     return response;
   } catch (error) {
-    console.error("좋아요 삭제:", error);
+    ("좋아요 삭제:", error);
     throw error;
   }
 }
@@ -91,7 +91,7 @@ export async function getSearchPost(query) {
     });
     return response;
   } catch (error) {
-    console.error("게시물 검색 오류:", error);
+    ("게시물 검색 오류:", error);
     throw error;
   }
 }

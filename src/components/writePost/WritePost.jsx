@@ -29,7 +29,6 @@ export default function WritePost() {
     },
     onError: (error) => {
       alert("게시글 등록에 실패했습니다.");
-      console.error(error);
     },
   });
 

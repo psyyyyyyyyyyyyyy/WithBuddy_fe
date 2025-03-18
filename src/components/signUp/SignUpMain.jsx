@@ -64,11 +64,9 @@ export default function SignUpMain() {
 
     try {
       const response = await postSignUp(userData);
-      console.log("회원가입 성공:", response);
       alert("회원가입이 완료되었습니다.");
       navigate("/login");
     } catch (error) {
-      console.error("회원가입 실패:", error);
       if (error.response && error.response.status === 409) {
         alert("이미 존재하는 유저입니다.");
       } else {

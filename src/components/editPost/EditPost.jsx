@@ -15,7 +15,6 @@ export default function EditPost() {
   const [content, setContent] = useState("");
 
   useEffect(() => {
-    console.log(post);
     if (post) {
       setTitle(post.title || "");
       setHashtags(post.postTags?.join(" ") || "");
@@ -30,9 +29,8 @@ export default function EditPost() {
     onSuccess: () => {
       navigate(-1); // 수정 후 이전 페이지로 이동
     },
-    onError: (error) => {
+    onError: () => {
       alert("게시글 수정에 실패했습니다.");
-      console.error(error);
     },
   });
 

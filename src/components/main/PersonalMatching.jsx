@@ -46,7 +46,7 @@ export default function PersonalMatching() {
 
         setMembers(sortedMembers);
       } catch (error) {
-        console.error("그룹 매칭 데이터 불러오기 실패:", error);
+        alert("개인 매칭 데이터 불러오기 실패:");
       } finally {
         setIsLoding(false); // 로딩 종료
       }

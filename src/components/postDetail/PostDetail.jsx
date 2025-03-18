@@ -35,7 +35,6 @@ export default function PostDetail() {
         setLikeCount(postData.likeCount || 0);
         setLiked(postData.likedBy?.length > 0); // likedBy 배열이 비어있지 않다면 true
       } catch (error) {
-        console.error("게시물 상세 조회 오류:", error);
         navigate(-1);
       }
     };
@@ -60,7 +59,7 @@ export default function PostDetail() {
       }
       setLiked((prev) => !prev); // liked 상태 토글
     } catch (error) {
-      console.error("좋아요 처리 실패:", error);
+      ("좋아요 처리 실패:", error);
     }
   };
 
@@ -77,7 +76,7 @@ export default function PostDetail() {
       await deletePost(postId);
       navigate("/post");
     } catch (error) {
-      console.error("게시물 삭제 실패:", error);
+      alert("다시 시도해주세요.");
     }
   };
 

@@ -55,7 +55,6 @@ async function getDeviceToken() {
   const token = await getToken(messaging, {
     vapidKey,
   });
-  console.log(token);
   return token;
 }
 

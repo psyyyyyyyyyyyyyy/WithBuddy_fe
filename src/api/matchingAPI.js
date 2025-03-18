@@ -6,7 +6,7 @@ export async function getPersonalMatching() {
     const response = await APIService.private.get(baseUrl);
     return response;
   } catch (error) {
-    console.error("개인 매칭 오류:", error);
+    ("개인 매칭 오류:", error);
     throw error; // 에러를 부모 컴포넌트로 던짐
   }
 }
@@ -17,7 +17,7 @@ export async function getGroupMatching() {
     const response = await APIService.private.get(baseUrl);
     return response;
   } catch (error) {
-    console.error("그룹 매칭 오류:", error);
+    ("그룹 매칭 오류:", error);
     throw error; 
   }
 }
@@ -28,7 +28,7 @@ export async function getMatchingInfo(userId) {
       const response = await APIService.private.get(baseUrl);
       return response;
     } catch (error) {
-      console.error(`사용자 ${userId} 매칭 정보 오류:`, error);
+      (`사용자 ${userId} 매칭 정보 오류:`, error);
       throw error;
     }
   }

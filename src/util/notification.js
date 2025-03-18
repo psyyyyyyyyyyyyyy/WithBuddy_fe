@@ -3,9 +3,8 @@ export async function registerServiceWorker() {
       const registration = await navigator.serviceWorker.register(
         "firebase-messaging-sw.js"
       );
-      console.log("Service Worker 등록 성공:", registration);
     } catch (error) {
-      console.log("Service Worker 등록 실패:", error);
+      console.error("Service Worker 등록 실패:", error);
     }
   }
   
