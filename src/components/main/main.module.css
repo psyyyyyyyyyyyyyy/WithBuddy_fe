@@ -90,6 +90,23 @@
   text-align: center;
 }
 
+.notiButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 1.5rem;
+}
+
+.bellIcon {
+  color: #ffcc00;
+}
+
+.bellIcon:hover {
+  color: #ffaa00;
+}
+
+
 
 @media (max-height: 700px) {
   .titleContainer {
