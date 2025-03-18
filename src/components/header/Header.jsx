@@ -14,7 +14,7 @@ export default function Header() {
     try {
       await postLogout(); // 서버에 로그아웃 요청
     } catch (error) {
-      console.error("로그아웃 실패:", error);
+      alert("로그아웃 실패:");
     }
 
     logout(); // Zustand & 로컬 스토리지 초기화

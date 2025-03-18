@@ -32,7 +32,7 @@ export default function ModificationCard() {
           });
         }
       } catch (error) {
-        console.error("내 정보 불러오기 실패:", error);
+        alert("내 정보 불러오기 실패:");
       }
     };
 
@@ -86,7 +86,6 @@ export default function ModificationCard() {
         alert("정보 수정에 실패했습니다.");
       }
     } catch (error) {
-      console.error("정보 수정 실패:", error);
       alert("서버에 문제가 발생했습니다.");
     }
   };

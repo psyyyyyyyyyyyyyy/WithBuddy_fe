@@ -55,9 +55,8 @@ async function getDeviceToken() {
 const deleteDeviceToken = async () => {
   try {
     await deleteToken(messaging);
-    console.log("FCM 토큰 삭제 완료 (알림 끄기)");
   } catch (error) {
-    console.error("FCM 토큰 삭제 실패:", error);
+    alert("다시 시도해주세요.");
   }
 };
 

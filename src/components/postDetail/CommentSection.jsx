@@ -56,7 +56,7 @@ export default function CommentSection({ postId, initialComments }) {
         return prevMap;
       });
     } catch (error) {
-      console.error("댓글 등록 실패:", error);
+      alert("댓글 등록 실패");
     } finally {
       setLoading(false);
     }
@@ -69,7 +69,7 @@ export default function CommentSection({ postId, initialComments }) {
         prev.filter((comment) => comment.commentId !== commentId)
       );
     } catch (error) {
-      console.error("댓글 삭제 실패:", error);
+      alert("댓글 삭제 실패");
     }
   };
 

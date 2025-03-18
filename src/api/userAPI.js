@@ -6,8 +6,8 @@ export async function postSignUp(userData) {
     const response = await APIService.public.post(baseUrl, userData);
     return response;
   } catch (error) {
-    console.error("회원가입 API 오류:", error);
-    throw error; // 에러를 부모 컴포넌트로 던짐
+    ("회원가입 API 오류:", error);
+    throw error;
   }
 }
 
@@ -17,7 +17,7 @@ export async function postLogin(userData) {
     const response = await APIService.private.post(baseUrl, userData);
     return response;
   } catch (error) {
-    console.error("로그인 API 오류:", error);
+    ("로그인 API 오류:", error);
     throw error;
   }
 }
@@ -28,7 +28,7 @@ export async function patchPIN(userData) {
     const response = await APIService.public.patch(baseUrl, userData);
     return response;
   } catch (error) {
-    console.error("핀번호 업데이트 오류:", error);
+    ("핀번호 업데이트 오류:", error);
     throw error;
   }
 }
@@ -39,7 +39,7 @@ export async function getMyInfo() {
     const response = await APIService.private.get(baseUrl);
     return response;
   } catch (error) {
-    console.error("내 정보 오류:", error);
+    ("내 정보 오류:", error);
     throw error;
   }
 }
@@ -50,7 +50,7 @@ export async function patchMyInfo(userData) {
     const response = await APIService.private.patch(baseUrl, userData);
     return response;
   } catch (error) {
-    console.error("유저정보 업데이트 오류:", error);
+    ("유저정보 업데이트 오류:", error);
     throw error;
   }
 }
@@ -61,7 +61,7 @@ export async function deleteUser() {
     const response = await APIService.private.delete(baseUrl);
     return response;
   } catch (error) {
-    console.error("유저 탈퇴 오류:", error);
+    ("유저 탈퇴 오류:", error);
     throw error;
   }
 }
@@ -72,7 +72,7 @@ export async function postLogout() {
     const response = await APIService.private.post(baseUrl);
     return response;
   } catch (error) {
-    console.error("로그아웃 API 오류:", error);
+    ("로그아웃 API 오류:", error);
     throw error;
   }
 }

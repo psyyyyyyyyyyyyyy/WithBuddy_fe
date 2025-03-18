@@ -66,7 +66,6 @@ export default function SignUpInput({
       alert("인증번호가 발송되었습니다.");
     } catch (error) {
       alert("이메일 인증 요청에 실패했습니다. 다시 시도해주세요.");
-      console.error("인증 이메일 전송 오류:", error);
     } finally {
       setIsSendingCode(false); // 로딩 종료
     }
@@ -87,7 +86,6 @@ export default function SignUpInput({
       alert("이메일 인증이 완료되었습니다.");
     } catch (error) {
       alert("인증번호가 올바르지 않습니다. 다시 확인해주세요.");
-      console.error("인증 코드 검증 오류:", error);
     }
   };
 

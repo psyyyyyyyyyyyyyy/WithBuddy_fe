@@ -10,7 +10,7 @@ export default function GroupMatching() {
   const [selectedMember, setSelectedMember] = useState(null);
   const [isLoding, setIsLoding] = useState(false);
   const currentUserId = Number(localStorage.getItem("userId"));
-  
+
   useEffect(() => {
     const fetchMembers = async () => {
       setIsLoding(true); //로딩 시작
@@ -45,8 +45,8 @@ export default function GroupMatching() {
         );
 
         setMembers(sortedMembers);
-      } catch (error) {
-        console.error("그룹 매칭 데이터 불러오기 실패:", error);
+      } catch {
+        alert("그룹 매칭 데이터 불러오기에 실패했습니다.");
       } finally {
         setIsLoding(false); // 로딩 종료
       }
