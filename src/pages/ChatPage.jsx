@@ -20,7 +20,7 @@ const ChatPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const newSocket = io("https://api.skuwithbuddy.com");
+    const newSocket = io("https://api.skuwithbuddy.com", {withCredentials: true});
     setSocket(newSocket);
 
     newSocket.on("connect", () => {
