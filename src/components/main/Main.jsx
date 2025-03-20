@@ -17,8 +17,9 @@ export default function Main() {
   const [activeTab, setActiveTab] = useState("group");
   const [isLoading, setIsLoading] = useState(false);
   const [isNotiEnabled, setIsNotiEnabled] = useState(
-    Notification.permission === "granted"
+    typeof Notification !== "undefined" && Notification.permission === "granted"
   );
+  
   useEffect(() => {
     const fetchDeviceToken = async () => {
       try {
@@ -81,10 +82,35 @@ export default function Main() {
   const TOKEN_ENDPOINT = import.meta.env.VITE_APP_TOKEN;
 
   async function getDeviceToken() {
+    if (!("Notification" in window)) {
+      console.warn("이 브라우저는 알림을 지원하지 않습니다.");
+      return null; // 알림 미지원 브라우저 예외 처리
+    }
+    
+    if (typeof Notification === "undefined") {
+      console.warn("이 브라우저는 알림을 지원하지 않습니다.");
+      return null; // 알림 미지원 브라우저 예외 처리
+    }
+  
+    if (Notification.permission !== "granted") {
+      console.warn("알림 권한이 허용되지 않음.");
+      return null; // 알림 권한 없으면 토큰 요청 안 함
+    }
+  
     const vapidKey = import.meta.env.VITE_APP_VAPID_KEY;
-    if (!vapidKey) throw new Error("VAPID Key가 설정되지 않았습니다.");
-    return await getToken(messaging, { vapidKey });
+    if (!vapidKey) {
+      console.error("VAPID Key가 설정되지 않았습니다.");
+      return null;
+    }
+  
+    try {
+      return await getToken(messaging, { vapidKey });
+    } catch (error) {
+      console.error("FCM 토큰 가져오기 실패:", error);
+      return null;
+    }
   }
+  
   const getDeviceTokenFromServer = async () => {
     try {
       const response = await axios.get(`${API_URL}${TOKEN_ENDPOINT}`, {
