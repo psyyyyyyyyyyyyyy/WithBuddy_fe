@@ -37,6 +37,7 @@ export default function Main() {
 
     fetchDeviceToken();
   }, []);
+  
   // 알림 토글 핸들러
   const toggleNotification = async () => {
     if (isGoogleApp()) {
