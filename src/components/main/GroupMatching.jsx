@@ -46,7 +46,7 @@ export default function GroupMatching() {
 
         setMembers(sortedMembers);
       } catch {
-        alert("로그인이 필요합니다.");
+        return;
       } finally {
         setIsLoding(false); // 로딩 종료
       }

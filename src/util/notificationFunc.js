@@ -57,17 +57,20 @@ async function getDeviceToken() {
   });
   return token;
 }
+const API_URL = import.meta.env.VITE_APP_API_URL;
+const TOKEN_ENDPOINT = import.meta.env.VITE_APP_TOKEN;
 
 export const postDeviceToken = async (deviceToken) => {
-  const userId = Number(localStorage.getItem("userId"));
   const response = await axios.post(
-    "https://api.skuwithbuddy.com/api/v1/subscribe",
-    { userId },
+    `${API_URL}${TOKEN_ENDPOINT}/subscribe`,
+    {},
     {
       headers: {
         engine: deviceToken,
       },
+      withCredentials: true,
     }
   );
   return response;
 };
+
