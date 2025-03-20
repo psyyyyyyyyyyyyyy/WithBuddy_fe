@@ -54,12 +54,14 @@ const ChatPage = () => {
         roomId,
         content: message,
       };
-      
+
       socket.emit("sendMessage", newMsg);
+      socket.emit("getMessages", roomId);
       setMessage("");
     }
+    
   };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     sendMessage();
