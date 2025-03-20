@@ -20,7 +20,6 @@ export async function handleAllowNotification() {
         return "granted";
       } catch (error) {
         console.error(error);
-        throw error;
       }
     } else {
       return "default";
@@ -45,18 +44,37 @@ async function retryGetDeviceToken(retries) {
   }
 }
 
+function isInAppBrowser() {
+  const userAgent = navigator.userAgent.toLowerCase();
+  return userAgent.includes("naver") || userAgent.includes("gsa");
+}
+
+
 async function getDeviceToken() {
-  const vapidKey = import.meta.env.VITE_APP_VAPID_KEY;
-  if (!vapidKey) {
-    alert("VAPID Key가 설정되지 않았습니다.");
+  if (isInAppBrowser()) {
+    console.warn("인앱 브라우저에서는 FCM을 지원하지 않습니다.");
+    return null; // FCM 미지원 환경에서는 토큰 요청 안 함
   }
 
-  // 권한이 허용된 후에 토큰을 가져옴
-  const token = await getToken(messaging, {
-    vapidKey,
-  });
-  return token;
+  if (Notification.permission !== "granted") {
+    console.warn("알림 권한이 허용되지 않음.");
+    return null;
+  }
+
+  const vapidKey = import.meta.env.VITE_APP_VAPID_KEY;
+  if (!vapidKey) {
+    console.error("VAPID Key가 설정되지 않았습니다.");
+    return null;
+  }
+
+  try {
+    return await getToken(messaging, { vapidKey });
+  } catch (error) {
+    console.error("FCM 토큰 가져오기 실패:", error);
+    return null;
+  }
 }
+
 const API_URL = import.meta.env.VITE_APP_API_URL;
 const TOKEN_ENDPOINT = import.meta.env.VITE_APP_TOKEN;
 
