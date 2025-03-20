@@ -126,7 +126,7 @@ privateApi.interceptors.response.use(
       } catch (refreshError) {
         deleteCookie("accessToken");
         deleteCookie("refreshToken");
-        window.location.href = "/login";
+         window.location.href = "/login";
         return Promise.reject(refreshError);
       }
     }
