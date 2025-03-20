@@ -5,7 +5,7 @@ import LoginButton from "./LoginButton";
 import styles from "./loginMain.module.css";
 import { postLogin } from "../../api/userAPI";
 import useUserStore from "../../store/userStore";
-import { handleAllowNotification } from "../../util/notificationFunc";
+// import { handleAllowNotification } from "../../util/notificationFunc";
 
 export default function LoginMain() {
   const navigate = useNavigate();
@@ -19,12 +19,12 @@ export default function LoginMain() {
       return;
     }
 
-    if (Notification.permission === "default") {
-      const status = await handleAllowNotification();
-      if (status === "denied") {
-        alert("알림이 차단되었습니다.\n브라우저 설정에서 직접 허용해주세요.");
-      }
-    }
+    // if (Notification.permission === "default") {
+    //   const status = await handleAllowNotification();
+    //   if (status === "denied") {
+    //     alert("알림이 차단되었습니다.\n브라우저 설정에서 직접 허용해주세요.");
+    //   }
+    // }
 
     const requestBody = { studentId, pin };
 
