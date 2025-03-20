@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import styles from "./chatList.module.css";
 import Header from "../components/header/Header";
 import { io } from "socket.io-client";
@@ -8,16 +9,24 @@ import { ClipLoader } from "react-spinners";
 
 const ChatListPage = () => {
   const navigate = useNavigate();
+  const accessToken = Cookies.get("accessToken");
   const userId = Number(localStorage.getItem("userId"));
   const [rooms, setRooms] = useState([]);
   const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    if (!accessToken || !userId) {
+      navigate("/login");
+      return;
+    }
+  }, [accessToken, userId, navigate]);
 
   const getUserRooms = () => {
     if (socket) {
       socket.emit("getUserRooms", userId);
     }
   };
-
+  
   useEffect(() => {
     const newSocket = io("https://api.skuwithbuddy.com", { withCredentials: true });
     setSocket(newSocket);
