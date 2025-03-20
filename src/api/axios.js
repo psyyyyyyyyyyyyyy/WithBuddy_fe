@@ -43,9 +43,6 @@
  */
 
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
-const navigate = useNavigate();
 
 /**
  * 쿠키에서 특정 이름의 값을 가져오는 함수
@@ -129,7 +126,7 @@ privateApi.interceptors.response.use(
       } catch (refreshError) {
         deleteCookie("accessToken");
         deleteCookie("refreshToken");
-        navigate("/login", { replace: true });
+        window.location.href = "/login";
         return Promise.reject(refreshError);
       }
     }
