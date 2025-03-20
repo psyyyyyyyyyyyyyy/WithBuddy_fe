@@ -37,6 +37,7 @@ export default function Main() {
 
     fetchDeviceToken();
   }, []);
+  
   // 알림 토글 핸들러
   const toggleNotification = async () => {
     if (isGoogleApp()) {
@@ -48,13 +49,13 @@ export default function Main() {
       alert("이 브라우저는 알림을 지원하지 않습니다.");
       return;
     }
-    
+
     if (Notification.permission === "default") {
       // 사용자가 아직 설정 안 했을 경우 → 알림 권한 요청
       const status = await handleAllowNotification();
 
       if (status === "granted") {
-        alert("웹 알림이 활성화되었습니다!");
+        alert("알림 권한 요청이 허용되었습니다.");
       } else {
         alert("알림 권한 요청이 취소되었습니다.");
       }

@@ -48,7 +48,7 @@ async function retryGetDeviceToken(retries) {
 async function getDeviceToken() {
   const vapidKey = import.meta.env.VITE_APP_VAPID_KEY;
   if (!vapidKey) {
-    throw new Error("VAPID Key가 설정되지 않았습니다.");
+    alert("VAPID Key가 설정되지 않았습니다.");
   }
 
   // 권한이 허용된 후에 토큰을 가져옴
