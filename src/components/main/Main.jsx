@@ -92,7 +92,7 @@ export default function Main() {
       });
       return response;
     } catch (error) {
-      alert("다시 시도해주세요.");
+      return;
     }
   };
   // 서버에서  토큰 삭제 (알림 수신 차단)
@@ -104,7 +104,7 @@ export default function Main() {
         withCredentials: true,
       });
     } catch (error) {
-      alert("로그인 후 이용해주세요.");
+      alert("다시 시도해주세요.");
     } finally {
       setIsLoading(false);
     }
