@@ -19,7 +19,7 @@ export default function Main() {
   const [isNotiEnabled, setIsNotiEnabled] = useState(
     typeof Notification !== "undefined" && Notification.permission === "granted"
   );
-  
+
   useEffect(() => {
     const fetchDeviceToken = async () => {
       try {
@@ -39,6 +39,16 @@ export default function Main() {
   }, []);
   // 알림 토글 핸들러
   const toggleNotification = async () => {
+    if (isGoogleApp()) {
+      alert("Google App에서는 알림이 지원되지 않습니다.\nChrome에서 다시 접속해주세요.");
+      return;
+    }
+  
+    if (!("Notification" in window)) {
+      alert("이 브라우저는 알림을 지원하지 않습니다.");
+      return;
+    }
+    
     if (Notification.permission === "default") {
       // 사용자가 아직 설정 안 했을 경우 → 알림 권한 요청
       const status = await handleAllowNotification();
@@ -76,33 +86,43 @@ export default function Main() {
       setIsLoading(false); // 로딩 종료
     }
   };
+  // Google App인지 확인하는 함수
+  const isGoogleApp = () => {
+    const userAgent = navigator.userAgent.toLowerCase();
+    return userAgent.includes("gsa"); // "GSA" = Google Search App
+  };
 
   // 파이어베이스로 부터 토큰 가져오기
   const API_URL = import.meta.env.VITE_APP_API_URL;
   const TOKEN_ENDPOINT = import.meta.env.VITE_APP_TOKEN;
 
   async function getDeviceToken() {
+    if (isGoogleApp()) {
+      console.warn("Google App에서는 FCM 알림을 지원하지 않습니다.");
+      return null;
+    }
+
     if (!("Notification" in window)) {
       console.warn("이 브라우저는 알림을 지원하지 않습니다.");
       return null; // 알림 미지원 브라우저 예외 처리
     }
-    
+
     if (typeof Notification === "undefined") {
       console.warn("이 브라우저는 알림을 지원하지 않습니다.");
       return null; // 알림 미지원 브라우저 예외 처리
     }
-  
+
     if (Notification.permission !== "granted") {
       console.warn("알림 권한이 허용되지 않음.");
       return null; // 알림 권한 없으면 토큰 요청 안 함
     }
-  
+
     const vapidKey = import.meta.env.VITE_APP_VAPID_KEY;
     if (!vapidKey) {
       console.error("VAPID Key가 설정되지 않았습니다.");
       return null;
     }
-  
+
     try {
       return await getToken(messaging, { vapidKey });
     } catch (error) {
@@ -110,7 +130,7 @@ export default function Main() {
       return null;
     }
   }
-  
+
   const getDeviceTokenFromServer = async () => {
     try {
       const response = await axios.get(`${API_URL}${TOKEN_ENDPOINT}`, {
@@ -160,22 +180,20 @@ export default function Main() {
             )}
           </button>
         </div>
-          <div className={styles.tabContainer}>
-            <button
-              className={activeTab === "group" ? styles.activeTab : styles.tab}
-              onClick={() => setActiveTab("group")}
-            >
-              그룹 매칭
-            </button>
-            <button
-              className={
-                activeTab === "personal" ? styles.activeTab : styles.tab
-              }
-              onClick={() => setActiveTab("personal")}
-            >
-              개인 매칭
-            </button>
-          </div>
+        <div className={styles.tabContainer}>
+          <button
+            className={activeTab === "group" ? styles.activeTab : styles.tab}
+            onClick={() => setActiveTab("group")}
+          >
+            그룹 매칭
+          </button>
+          <button
+            className={activeTab === "personal" ? styles.activeTab : styles.tab}
+            onClick={() => setActiveTab("personal")}
+          >
+            개인 매칭
+          </button>
+        </div>
         <div className={styles.contentBox}>
           {activeTab === "group" ? <GroupMatching /> : <PersonalMatching />}
         </div>
